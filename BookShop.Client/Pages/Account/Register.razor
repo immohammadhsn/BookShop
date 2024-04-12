@@ -1,0 +1,54 @@
+﻿@page "/Account/Register"
+
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Identity
+
+@namespace BookShop.Client
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="website icon" type="png" href="/Assets/spellbook.png">
+    <title>sign up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <StatusMessage Message="@message" Type="messageType" DateTime="dateTime" />
+    <EditForm Model="RegesteredUser" method="post" OnValidSubmit="RegisterUser">
+        <DataAnnotationsValidator />
+        <div class="row cont-1">
+            <div class="col-6 left-1">
+                <div class="wrapper">
+                        <div class="input-box">
+                            <InputText @bind-Value="RegesteredUser.DisplayedName" placeholder="Username" required />
+                            <i class="fa-solid fa-user" style="color: #ffffff;"></i>
+                        </div>
+                        <div class="input-box">
+                            <InputText @bind-Value="RegesteredUser.PhoneNumber" placeholder="Phone" aria-hidden="true" required />
+                            <i class="fa-solid fa-phone" style="color: #ffffff;"></i>
+                        </div>
+
+                        <div class="input-box">
+                            <InputText @bind-Value="RegesteredUser.Email" type="email" placeholder="Email" aria-hidden="true" required />
+                            <i class="fa-solid fa-envelope" style="color: #ffffff;"></i>
+                        </div>
+                        <div class="input-box">
+                            <InputText @bind-Value="RegesteredUser.Password" placeholder="Password" aria-hidden="true" required />
+                            <i class="fa-solid fa-lock" style="color: #ffffff;"></i>
+                        </div>
+
+                        <div class="input-box">
+                            <InputText @bind-Value="RegesteredUser.ConfirmPassword" placeholder="Confirm Password" aria-hidden="true" required />
+                            <i class="fa-solid fa-lock" style="color: #ffffff;"></i>
+                        </div>
+
+                        <button type="submit" class="btn">Signup</button>
+                </div>
+            </div>
+            
+        </div>
+    </EditForm>
+</body>

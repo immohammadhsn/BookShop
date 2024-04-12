@@ -1,0 +1,58 @@
+﻿@page "/Account/Login"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity
+@namespace BookShop.Client
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="website icon" type="png" href="/Assets/spellbook.png">
+    <title>login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="row cont-1">
+        <div class="col-6 left-1">
+            <div class="wrapper">
+                <StatusMessage Message="@message" Type="messageType" DateTime="dateTime" />
+                <EditForm Model="LoggedUser" method="post" OnValidSubmit="LoginUser" FormName="login">
+                    <DataAnnotationsValidator />
+                    <div class="input-box">
+                        <input type="text" @bind="LoggedUser.Email" placeholder="Email" required />
+                        <i class="fa-solid fa-envelope" style="color: #ffffff;"></i>
+                        <ValidationMessage For="()=>LoggedUser.Email" />
+                    </div>
+                    <div class="input-box">
+                        <input type="password" @bind="LoggedUser.Password" placeholder="Password" required />
+                        <i class="fa-solid fa-lock" style="color: #ffffff;"></i>
+                        <ValidationMessage For="()=>LoggedUser.Password" />
+                    </div>
+
+                    <button type="submit" class="btn">Login</button>
+
+                    <div class="Signup">
+                        <p>If you don't have an account, please <a href="./Account/Register">Signup</a></p>
+                    </div>
+                </EditForm>
+            </div>
+
+        </div>
+
+        <div class="col-6 right-2">
+            <div>
+                <div class="cont-3">
+                    <img src="/Assets/spellbook.png" alt="icon" class="ic-1">
+                    <p class="p1">BookNook </p>
+                </div>
+                <h1>login</h1>
+                <a href="./Account/Register"><div class="btn-2">sign up</div></a>
+                <span>Don't have an account?</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
