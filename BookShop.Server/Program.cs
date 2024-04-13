@@ -1,8 +1,10 @@
 using BookShop.Server;
 using BookShop.Server.Data;
+using BookShop.Server.Middlewares;
 using BookShop.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -66,6 +68,16 @@ builder.Services.AddSwaggerGen(options =>
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = actionContext =>
+    {
+        var customValidationResponse = new CustomValidationResponse();
+        return customValidationResponse.CustomErrorResponse(actionContext);
+    };
+});
+
 
 var app = builder.Build();
 

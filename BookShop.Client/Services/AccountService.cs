@@ -4,13 +4,21 @@ using static BookShop.Shared.ServiceResponses;
 
 namespace BookShop.Client.Services;
 
-public class AccountService (HttpClient _httpClient):IUserAccount
+public class AccountService(HttpClient _httpClient) : IUserAccount
 {
     public async Task<GeneralResponse> CreateAccount(UserDTO userDTO)
     {
         HttpResponseMessage? response = await _httpClient.PostAsJsonAsync("api/Account/Register", userDTO);
-        GeneralResponse? result = await response.Content.ReadFromJsonAsync<GeneralResponse>();
+        GeneralResponse? result;
+        try
+        {
+            result = await response.Content.ReadFromJsonAsync<GeneralResponse>();
+        }
+        catch (Exception e)
+        {
 
+            throw e;
+        }
         return result!;
     }
 

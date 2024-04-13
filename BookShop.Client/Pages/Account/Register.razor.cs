@@ -7,7 +7,7 @@ namespace BookShop.Client
     public partial class Register
     {
         [SupplyParameterFromForm]
-        public UserDTO RegesteredUser { get; set; } = new();
+        public UserDTO RegisteredUser { get; set; } = new();
 
         private MessageType messageType;
         private string? message;
@@ -16,7 +16,7 @@ namespace BookShop.Client
 
         public async Task RegisterUser()
         {
-            var response = await AccountService.CreateAccount(RegesteredUser);
+            var response = await AccountService.CreateAccount(RegisteredUser);
             message = response.Message;
             dateTime = DateTime.Now;
             StateHasChanged();
@@ -24,8 +24,6 @@ namespace BookShop.Client
 
             if(response.Succeeded)
                 NavManager.NavigateTo($"Account/Login?returnUrl={Uri.EscapeDataString(NavManager.Uri)}", forceLoad: true);
-
-
         }
     }
 }
