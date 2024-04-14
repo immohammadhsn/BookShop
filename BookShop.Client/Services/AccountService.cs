@@ -6,19 +6,13 @@ namespace BookShop.Client.Services;
 
 public class AccountService(HttpClient _httpClient) : IUserAccount
 {
-    public async Task<GeneralResponse> CreateAccount(UserDTO userDTO)
+    public async Task<GeneralResponse> CreateAccount(RegisterDTO userDTO)
     {
         HttpResponseMessage? response = await _httpClient.PostAsJsonAsync("api/Account/Register", userDTO);
         GeneralResponse? result;
-        try
-        {
-            result = await response.Content.ReadFromJsonAsync<GeneralResponse>();
-        }
-        catch (Exception e)
-        {
 
-            throw e;
-        }
+        result = await response.Content.ReadFromJsonAsync<GeneralResponse>();
+
         return result!;
     }
 
@@ -30,7 +24,7 @@ public class AccountService(HttpClient _httpClient) : IUserAccount
         return result!;
     }
 
-    public async Task<GeneralResponse> UpdateUserData(UserDTO updatedUser)
+    public async Task<GeneralResponse> UpdateUserData(RegisterDTO updatedUser)
     {
         HttpResponseMessage? response = await _httpClient.PostAsJsonAsync("api/Account/EditUser", updatedUser);
         GeneralResponse? result = await response.Content.ReadFromJsonAsync<GeneralResponse>();

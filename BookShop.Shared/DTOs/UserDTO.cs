@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace BookShop.Shared;
 
-public class UserDTO
+public class RegisterDTO
 {
     public string Id { get; set; } = string.Empty;
     [Required]

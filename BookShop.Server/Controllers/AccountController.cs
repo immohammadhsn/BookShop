@@ -13,7 +13,7 @@ namespace BookShop.Server.Controllers;
 public class AccountController(IUserAccount userAccount,UserManager<ApplicationUser> userManager) : ControllerBase
 {
     [HttpPost("Register")]
-    public async Task<IActionResult> Register(UserDTO userDTO)
+    public async Task<IActionResult> Register(RegisterDTO userDTO)
     {
         var response = await userAccount.CreateAccount(userDTO);
 
@@ -29,7 +29,7 @@ public class AccountController(IUserAccount userAccount,UserManager<ApplicationU
     }
 
     [HttpPut("EditUser")]
-    public async Task<IActionResult> EditUser(UserDTO editedUser)
+    public async Task<IActionResult> EditUser(RegisterDTO editedUser)
     {
         var response = await userAccount.UpdateUserData(editedUser);
 

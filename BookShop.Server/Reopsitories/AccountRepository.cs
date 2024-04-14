@@ -13,43 +13,24 @@ namespace BookShop.Server;
 public class AccountRepository(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config) : IUserAccount
 {
 
-    public async Task<GeneralResponse> CreateAccount(UserDTO userDTO)
+    public async Task<GeneralResponse> CreateAccount(RegisterDTO registeredUser)
     {
-        if (userDTO is null) return new GeneralResponse(false, "Model is empty");
+        if (registeredUser is null) return new GeneralResponse(false, "Model is empty");
         var newUser = new ApplicationUser()
         {
-            DisplayedName = userDTO.DisplayedName,
-            Email = userDTO.Email,
-            PasswordHash = userDTO.Password,
-            UserName = userDTO.Email,
-            PhoneNumber = userDTO.PhoneNumber
+            DisplayedName = registeredUser.DisplayedName,
+            Email = registeredUser.Email,
+            PasswordHash = registeredUser.Password,
+            UserName = registeredUser.Email,
+            PhoneNumber = registeredUser.PhoneNumber
         };
         var user = await userManager.FindByEmailAsync(newUser.Email);
-        if (user is not null) return new GeneralResponse(false, "User registered already");
+        if (user is not null) return new GeneralResponse(false, "Existing_Email");
 
-        var createUser = await userManager.CreateAsync(newUser!, userDTO.Password);
+        var createUser = await userManager.CreateAsync(newUser!, registeredUser.Password);
         if (!createUser.Succeeded) return new GeneralResponse(false, "Error occured.. please try again", createUser.Errors);
 
-        //Assign Default Role : Admin to first registrar; rest is user
-        var checkAdmin = await roleManager.FindByNameAsync("Admin");
-        if (checkAdmin is null)
-            await roleManager.CreateAsync(new IdentityRole() { Name = ConstSettings.AdminRole });
-
-        var usersNumber = userManager.Users.Count();
-        if (usersNumber <= 0)
-        {
-            await userManager.AddToRoleAsync(newUser, ConstSettings.AdminRole);
-            return new GeneralResponse(true, "Account Created");
-        }
-        else
-        {
-            var checkUser = await roleManager.FindByNameAsync(ConstSettings.DefalutRole);
-            if (checkUser is null)
-                await roleManager.CreateAsync(new IdentityRole() { Name = ConstSettings.DefalutRole });
-
-            await userManager.AddToRoleAsync(newUser, "User");
-            return new GeneralResponse(true, "Account Created");
-        }
+        return await AssignUserToDefaultRole(newUser);
     }
 
     public async Task<LoginResponse> LoginAccount(LoginDTO loginDTO)
@@ -94,7 +75,7 @@ public class AccountRepository(UserManager<ApplicationUser> userManager, RoleMan
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public async Task<GeneralResponse> UpdateUserData(UserDTO updatedUser)
+    public async Task<GeneralResponse> UpdateUserData(RegisterDTO updatedUser)
     {
         var user = await userManager.FindByEmailAsync(updatedUser.Email);
         if (user is null)
@@ -110,5 +91,28 @@ public class AccountRepository(UserManager<ApplicationUser> userManager, RoleMan
             return new(true, "User data updated successfully") { Data = user };
         else
             return new(false, "Error while updating user data", response.Errors);
+    }
+
+    public async Task<GeneralResponse> AssignUserToDefaultRole(ApplicationUser newUser)
+    {
+        var checkAdmin = await roleManager.FindByNameAsync("Admin");
+        if (checkAdmin is null)
+            await roleManager.CreateAsync(new IdentityRole() { Name = ConstSettings.AdminRole });
+
+        var usersNumber = userManager.Users.Count();
+        if (usersNumber <= 0)
+        {
+            await userManager.AddToRoleAsync(newUser, ConstSettings.AdminRole);
+            return new GeneralResponse(true, "Account Created");
+        }
+        else
+        {
+            var checkUser = await roleManager.FindByNameAsync(ConstSettings.DefalutRole);
+            if (checkUser is null)
+                await roleManager.CreateAsync(new IdentityRole() { Name = ConstSettings.DefalutRole });
+
+            await userManager.AddToRoleAsync(newUser, "User");
+            return new GeneralResponse(true, "Account Created");
+        }
     }
 }

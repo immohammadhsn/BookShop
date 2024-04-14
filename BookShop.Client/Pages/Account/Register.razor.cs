@@ -7,7 +7,7 @@ namespace BookShop.Client
     public partial class Register
     {
         [SupplyParameterFromForm]
-        public UserDTO RegisteredUser { get; set; } = new();
+        public RegisterDTO RegisteredUser { get; set; } = new();
 
         private MessageType messageType;
         private string? message;
