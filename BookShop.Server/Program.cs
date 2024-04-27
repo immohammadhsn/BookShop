@@ -2,6 +2,7 @@ using BookShop.Server;
 using BookShop.Server.Data;
 using BookShop.Server.Middlewares;
 using BookShop.Shared;
+using Generic.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??
         throw new InvalidOperationException("Connection String is not found"));
 });
+
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
 //Add Identity & JWT authentication
 //Identity

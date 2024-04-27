@@ -1,0 +1,16 @@
+﻿using System.Linq.Expressions;
+
+namespace Generic.Repositories
+{
+    public interface IBaseRepository<T> where T : class
+    {
+        Task<T?> CreateAsync(T entity);
+        Task<T?> DeleteAsync(Guid id);
+        Task<IQueryable<T>> FindAsync(Expression<Func<T, bool>> predicate);
+        Task<IQueryable<T>?> ReadAllAsync();
+        Task<IQueryable<T>?> ReadAllWithIncludesAsync(params string[] includes);
+        Task<T?> ReadByIdAsync(object id);
+        Task<T?> ReadByIdWithIncludesAsync(object id, params string[] includes);
+        Task<T?> UpdateAsync(Guid id,T entity);
+    }
+}
