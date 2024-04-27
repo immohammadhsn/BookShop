@@ -19,7 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 
-builder.Services.AddScoped<IUserAccount, AccountRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 //Starting
 builder.Services.AddDbContext<AppDbContext>(options =>

@@ -2,9 +2,18 @@
 
 namespace BookShop.Shared;
 
-public interface IUserAccount
+public interface IAccountRepository
 {
     Task<GeneralResponse> CreateAccount(RegisterDTO userDTO);
     Task<LoginResponse> LoginAccount(LoginDTO loginDTO);
-    public Task<GeneralResponse> UpdateUserData(RegisterDTO updatedUser);
+    Task<GeneralResponse> UpdateUserData(RegisterDTO updatedUser);
+}
+
+public interface IAccountService
+{
+    Task<GeneralResponse> CreateAccount(RegisterDTO userDTO);
+    Task<LoginResponse> LoginAccount(LoginDTO loginDTO);
+    Task<GeneralResponse> UpdateUserData(RegisterDTO updatedUser);
+    Task LogOut();
+
 }

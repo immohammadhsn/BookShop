@@ -16,10 +16,10 @@ namespace BookShop.Client
         private MessageType messageType;
 
         private DateTime dateTime;
+        CustomAuthenticationStateProvider? customAuthenticationStateProvider;
 
         public async Task LoginUser()
         {
-            var customAuthenticationStateProvider = (CustomAuthenticationStateProvider)AuthenticationStateProvider;
 
             var response = await AccountService.LoginAccount(LoggedUser);
             message = response.Message;
@@ -29,11 +29,16 @@ namespace BookShop.Client
 
             if (response.Succeeded)
             {
-                await customAuthenticationStateProvider.UpdateAuthenticationState(response.Token);
                 StateHasChanged();
 
                 NavManager.NavigateTo("/", true);
             }
+        }
+
+        public async Task LogOut()
+        {
+            await AccountService.LogOut();
+            StateHasChanged();
         }
     }
 }

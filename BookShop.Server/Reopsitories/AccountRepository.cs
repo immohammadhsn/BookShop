@@ -10,7 +10,7 @@ using static BookShop.Shared.ServiceResponses;
 
 namespace BookShop.Server;
 
-public class AccountRepository(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config) : IUserAccount
+public class AccountRepository(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config) : IAccountRepository
 {
 
     public async Task<GeneralResponse> CreateAccount(RegisterDTO registeredUser)

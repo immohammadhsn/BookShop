@@ -10,7 +10,7 @@ namespace BookShop.Server.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AccountController(IUserAccount userAccount,UserManager<ApplicationUser> userManager) : ControllerBase
+public class AccountController(IAccountRepository userAccount,UserManager<ApplicationUser> userManager) : ControllerBase
 {
     [HttpPost("Register")]
     public async Task<IActionResult> Register(RegisterDTO userDTO)
