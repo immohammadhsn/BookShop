@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Generic.DbCnotext;
 using BookShop.Server.Data;
 
 namespace Generic.Repositories;
@@ -23,7 +22,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     }
 
     public virtual async Task<IQueryable<T>?> ReadAllAsync()
-        => await Task.Run(() => _dbSet);
+        => await Task.Run(() => _dbSet.AsNoTracking());
 
     public virtual async Task<IQueryable<T>?> ReadAllWithIncludesAsync(params string[] includes)
     {
@@ -59,11 +58,15 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         var existingEntity = await _dbSet.FindAsync(id);
         if (existingEntity is null) return null;
 
-        foreach (var property in typeof(T).GetProperties())
+        var poperties = typeof(T).GetProperties();
+
+        foreach (var property in poperties)
         {
             if (property.Name == "Id") continue;
 
             var newValue = property.GetValue(updatedEntity);
+
+            if (newValue is null) continue;
             property.SetValue(existingEntity, newValue);
         }
 
@@ -71,8 +74,6 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
 
         return updatedEntity;
     }
-
-
 
     public virtual async Task<T?> DeleteAsync(Guid id)
     {

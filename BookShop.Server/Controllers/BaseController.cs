@@ -24,9 +24,9 @@ public class BaseController<T,TDTO>(IBaseRepository<T> baseRepository) : Control
 
             return Ok(entities);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(500, "An error occurred while processing your request.");
+            return StatusCode(500, ex.Message);
         }
     }
 
@@ -42,9 +42,9 @@ public class BaseController<T,TDTO>(IBaseRepository<T> baseRepository) : Control
 
             return Ok(entities);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(500, "An error occurred while processing your request.");
+            return StatusCode(500, ex.Message);
         }
     }
 
@@ -60,10 +60,10 @@ public class BaseController<T,TDTO>(IBaseRepository<T> baseRepository) : Control
 
             return Ok(entity);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            
-            return StatusCode(500, "An error occurred while processing your request.");
+
+            return StatusCode(500, ex.Message);
         }
     }
 
@@ -88,29 +88,33 @@ public class BaseController<T,TDTO>(IBaseRepository<T> baseRepository) : Control
         }
         catch (Exception ex)
         {
-            return StatusCode(500, "An error occurred while processing your request.");
+            return StatusCode(500, ex.Message);
         }
     }
 
 
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(Guid id, [FromBody] T entity)
+    public async Task<IActionResult> Put(Guid id, [FromBody] TDTO entity)
     {
         try
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            string json = JsonSerializer.Serialize(entity);
+            T castedEntity = JsonSerializer.Deserialize<T>(json);
+
             if (id.Equals(Guid.Empty))
                 return BadRequest("Invalid ID");
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
 
             T? existingEntity = await _baseRepository.ReadByIdAsync(id);
 
             if (existingEntity is null)
                 return NotFound("The Entity was not found");
             
-            T? updatedEntity = await _baseRepository.UpdateAsync(id, entity);
+            T? updatedEntity = await _baseRepository.UpdateAsync(id, castedEntity);
 
             if (updatedEntity is null)
                 return StatusCode(500, "Error creating entity");
@@ -148,9 +152,9 @@ public class BaseController<T,TDTO>(IBaseRepository<T> baseRepository) : Control
 
             return Ok();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(500, "An error occurred while processing your request.");
+            return StatusCode(500, ex.Message);
         }
     }
 }

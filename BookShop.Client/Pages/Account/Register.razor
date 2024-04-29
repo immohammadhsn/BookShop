@@ -30,7 +30,7 @@
                         <StatusMessage Message="@message" Type="messageType" DateTime="dateTime" />
                         <EditForm Model="RegisteredUser" method="post" OnValidSubmit="RegisterUser">
                             <ChildContent Context ="FormContext">
-
+                                <DataAnnotationsValidator/>
                             <div class="input-box">
                                 <input type="text" placeholder="Username" required>
                                 <i class="fa-solid fa-user" style="color: #ffffff;"></i>

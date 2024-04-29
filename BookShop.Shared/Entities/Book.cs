@@ -21,9 +21,9 @@ public class Book
 public class BookDTO
 {
     public Guid AuthorId { get; set; }
-    public string Title { get; set; }
-    public string Img { get; set; }
-    public string Discription { get; set; }
+    public string? Title { get; set; }
+    public string? Img { get; set; }
+    public string? Discription { get; set; }
     public double Price { get; set; }
     public double Discount { get; set; }
 
