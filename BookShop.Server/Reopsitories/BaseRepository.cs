@@ -86,8 +86,23 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         return entityToRemove;
     }
 
-    public virtual async Task<IQueryable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+    public virtual async Task<List<T>> FindAsync(string key, string? value)
     {
-        return await Task.Run(() => _dbSet.Where(predicate));
+        var property = typeof(T).GetProperty(key);
+
+        if (property == null)
+            throw new ArgumentException($"'{typeof(T).Name}' does not implement a public get property named '{key}'.");
+
+        if (value == null) return _dbSet.ToList();
+
+        var parameter = Expression.Parameter(typeof(T), "x");
+        var propertyAccess = Expression.Property(parameter, property);
+        var containsMethod = typeof(string).GetMethod("Contains", [typeof(string)]);
+        var valueExpression = Expression.Constant(value, typeof(string));
+        var containsCall = Expression.Call(propertyAccess, containsMethod, valueExpression);
+        var lambda = Expression.Lambda<Func<T, bool>>(containsCall, parameter);
+
+        return await _dbSet.Where(lambda).ToListAsync();
     }
+
 }

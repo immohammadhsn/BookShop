@@ -6,7 +6,7 @@ namespace Generic.Repositories
     {
         Task<T?> CreateAsync(T entity);
         Task<T?> DeleteAsync(Guid id);
-        Task<IQueryable<T>> FindAsync(Expression<Func<T, bool>> predicate);
+        Task<List<T>> FindAsync(string key, string? value);
         Task<IQueryable<T>?> ReadAllAsync();
         Task<IQueryable<T>?> ReadAllWithIncludesAsync(params string[] includes);
         Task<T?> ReadByIdAsync(object id);

@@ -1,6 +1,7 @@
 ﻿using Generic.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using System.Linq.Expressions;
 using System.Text.Json;
 
 namespace Generic.Controllers;
@@ -119,7 +120,7 @@ public class BaseController<T,TDTO>(IBaseRepository<T> baseRepository) : Control
             if (updatedEntity is null)
                 return StatusCode(500, "Error creating entity");
 
-            return Ok();
+            return Ok(updatedEntity);
         }
         catch (Exception ex)
         {
@@ -150,11 +151,19 @@ public class BaseController<T,TDTO>(IBaseRepository<T> baseRepository) : Control
             if (deletedEntity is null)
                 return StatusCode(500, "Error deleting entity");
 
-            return Ok();
+            return Ok(deletedEntity);
         }
         catch (Exception ex)
         {
             return StatusCode(500, ex.Message);
         }
+    }
+
+    [HttpGet("Find")]
+    public async Task<IActionResult> Find([FromQuery] string key, string? value)
+    {
+        var result = await _baseRepository.FindAsync(key, value);
+
+        return Ok(result);
     }
 }
