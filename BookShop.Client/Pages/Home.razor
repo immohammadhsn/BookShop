@@ -1,4 +1,6 @@
-﻿@page "/"
+﻿@using BookShop.Client
+
+@page "/"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,141 +10,156 @@
     <link rel="stylesheet" href="/css/home.css">
 </head>
 
-<nav class="navbar navbar-expand-lg navv">
-    <div class="container-fluid">
-        <a id="logo" class="navbar-brand logo" href="#">
-            <img src="../Assets/spellbook.png" width="70px" height="60px"
-                 alt="">
-        </a>
-        <div id="marquee">
-            <marquee scrollamount="5"> <a href="#" class="logo">BookNook</a></marquee>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li>
-                    <div class="search-container nav-item">
-                        <span class="fas fa-search search-icon"></span>
-                        <input type="text" class="search-input" placeholder="Search">
-                        <ul class="suggestions-list"></ul>
+<AuthorizeView>
+    <NotAuthorized>
+        <Entry />
+    </NotAuthorized>
+    <Authorized>
+
+        <nav class="navbar navbar-expand-lg navv">
+            <div class="container-fluid">
+                <a id="logo" class="navbar-brand logo" href="#">
+                    <img src="../Assets/spellbook.png" width="70px" height="60px"
+                         alt="">
+                </a>
+                <div id="marquee">
+                    <marquee scrollamount="5"> <a href="#" class="logo">BookNook</a></marquee>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav mr-auto">
+                        <form @onsubmit="@(()=>Search())" class="form-inline my-2 my-lg-0">
+                            <div class="search-container nav-item">
+                                <span class="fas fa-search search-icon"></span>
+                                <InputText @bind-Value="searchValue" class="search-input" placeholder="Search" />
+                                <ul class="suggestions-list"></ul>
+                            </div>
+                        </form>
+                    </ul>
+
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="../borrowed/borow.html" class="nav-link"><img src="../Assets/borrow.png" width="32px" height="32px" class="icon"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../admin/add.html" class="nav-link"><img src="../Assets/book.png" width="32px" height="32px" class="icon"></a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a href="#" class="nav-link"><img src="../Assets/edit.png" width="32px" height="32px" class="icon"></a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><img src="../Assets/profile (1).png" width="32px" height="32px" class="icon"></a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+        <h2>Explore your favourite book !</h2>
+        <div class="container cont-1">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center">
+                @foreach (var Book in AvailableBooks)
+                {
+                    <div class="col mb-4">
+                        <div class="image-container">
+                            <img src="@Book.Img" class="imgg im-hov">
+                            <div class="overlay">
+                                <div class="show">
+                                    <h5>@Book.Title</h5>
+                                    <button type="button" class="btn btn-1">Preview</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </li>
-                <div class="icons-1">
-                <li>
-                    <a href="../borrowed/borow.html"><img src="../Assets/borrow.png" width="32px" height="32px" class="icon"></a>
-                </li>
-                <li>
-                    <a href="../admin/add.html"><img src="../Assets/book.png" width="32px" height="32px" class="icon"></a>
-                </li>
-                <!-- <li>
-                  <a href="#"><img src="../Assets/edit.png" width="32px" height="32px" class="icon"></a>
-                </li> -->
-                <li>
-                    <a href="#"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
-                </li>
-                <li>
-                    <a href="#"><img src="../Assets/profile (1).png" width="32px" height="32px" class="icon"></a>
-                </li>
+                }
+            </div>
         </div>
-        </ul>
-    </div>
-    </div>
-</nav>
-<h2>Explore your favourite book !</h2>
-<div class="container text-center cont-1">
-    <div class="row">
-        @foreach (var Book in AvailableBooks)
-        {
-            <div class="col image-container ">
-                <img src="@Book.Img" class="imgg im-hov">
-                <div class="overlay">
-                    <div class="show">
-                        <h5>@Book.Title</h5>
-                        <button type="button" class="btn btn-1">Preview</button>
+
+
+
+        <div class="rate">
+            <h6>Rate This Product</h6>
+            <div class="rating-container rate">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+            <p id="rating-value">No rating selected</p>
+        </div>
+
+        <!-- -Footer Section--->
+        <footer class="Fot">
+            <!--Top-->
+            <div class="top-fot">
+                <div class="container content1">
+                    <div class="row">
+                        <div class="col-11">
+                            <a href="# ">BookNook ></a><span>home</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        }
-    </div>
-</div>
-
-<div class="rate">
-    <h6>Rate This Product</h6>
-    <div class="rating-container rate">
-        <span class="star" data-rating="1">★</span>
-        <span class="star" data-rating="2">★</span>
-        <span class="star" data-rating="3">★</span>
-        <span class="star" data-rating="4">★</span>
-        <span class="star" data-rating="5">★</span>
-    </div>
-    <p id="rating-value">No rating selected</p>
-</div>
-
-<!-- -Footer Section--->
-<footer class="Fot">
-    <!--Top-->
-    <div class="top-fot">
-        <div class="container content1">
-            <div class="row">
-                <div class="col-11">
-                    <a href="# ">BookNook ></a><span>home</span>
+            <!--Top end-->
+            <!--Mid-->
+            <div class="mid-fot">
+                <div class="container content2">
+                    <div class="row">
+                        <div class="col-3">
+                            <ul>
+                                <li>
+                                    <h5>CONTACT US</h5>
+                                </li>
+                                <li><a href="#">Customer Service</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-3">
+                            <ul>
+                                <li>
+                                    <h5>Registeration</h5>
+                                </li>
+                                <li><a href="../registeration/signup.html">Signup</a></li>
+                                <li><a href="../registeration/login.html">Login</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-3">
+                            <ul>
+                                <li>
+                                    <h5>about me</h5>
+                                </li>
+                                <li><a href="../contact/contact.html"> profile </a></li>
+                                <li><a href="../contact/contact.html">cart</a></li>
+                            </ul>
+                        </div>
+                        <!-- <div class="col-3">
+                          <ul class="SOCIAL">
+                            <li>
+                              <h5>NISSAN SOCIAL</h5>
+                            </li><br>
+                            <li><a href=""><i class="fa-brands fa-facebook"></i></a></li>
+                            <li><a href=""><i class="fa-brands fa-twitter"></i></a></li>
+                            <li><a href=""><i class="fa-brands fa-youtube"></i></a></li>
+                            <li><a href=""><i class="fa-brands fa-instagram"></i></a></li>
+                          </ul>
+                        </div> -->
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!--Top end-->
-    <!--Mid-->
-    <div class="mid-fot">
-        <div class="container content2">
-            <div class="row">
-                <div class="col-3">
-                    <ul>
-                        <li>
-                            <h5>CONTACT US</h5>
-                        </li>
-                        <li><a href="#">Customer Service</a></li>
-                    </ul>
-                </div>
-                <div class="col-3">
-                    <ul>
-                        <li>
-                            <h5>Registeration</h5>
-                        </li>
-                        <li><a href="../registeration/signup.html">Signup</a></li>
-                        <li><a href="../registeration/login.html">Login</a></li>
-                    </ul>
-                </div>
-                <div class="col-3">
-                    <ul>
-                        <li>
-                            <h5>about me</h5>
-                        </li>
-                        <li><a href="../contact/contact.html"> profile </a></li>
-                        <li><a href="../contact/contact.html">cart</a></li>
-                    </ul>
-                </div>
-                <!-- <div class="col-3">
-                  <ul class="SOCIAL">
-                    <li>
-                      <h5>NISSAN SOCIAL</h5>
-                    </li><br>
-                    <li><a href=""><i class="fa-brands fa-facebook"></i></a></li>
-                    <li><a href=""><i class="fa-brands fa-twitter"></i></a></li>
-                    <li><a href=""><i class="fa-brands fa-youtube"></i></a></li>
-                    <li><a href=""><i class="fa-brands fa-instagram"></i></a></li>
-                  </ul>
-                </div> -->
-            </div>
-        </div>
-    </div>
 
-    <!--mid end-->
-    <!--bot-->
-    <div class="fot-bot">
-        <div class="container">
-            <pre class="my-sig">Copyright @@2024 All rights reserved | This template is made by GPT team </pre>
-        </div>
-    </div>
-</footer>
+            <!--mid end-->
+            <!--bot-->
+            <div class="fot-bot">
+                <div class="container">
+                    <pre class="my-sig">Copyright @@2024 All rights reserved | This template is made by GPT team </pre>
+                </div>
+            </div>
+        </footer>
+    </Authorized>
+</AuthorizeView>
 
 <script src="home.js"></script>
 

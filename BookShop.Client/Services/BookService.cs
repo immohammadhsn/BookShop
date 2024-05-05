@@ -12,5 +12,7 @@ namespace BookShop.Client.Services
         {
             return await _httpClient.GetFromJsonAsync<Book>($"api/Book/{id}");
         }
+
+        public async Task<List<Book>?> Find(string key, string value) => await _httpClient.GetFromJsonAsync<List<Book>?>($"api/Book/Find?Key={key}&Value={value}");
     }
 }
