@@ -1,0 +1,144 @@
+body
+{
+  background-color: #fdfce3;
+}
+
+.navv{
+  background-color: #D9AC82;
+}
+
+.logo {
+    margin-left: 50px;
+    margin-top: 5px;
+  }
+  .navitems {
+    margin-left: 700px;
+    margin-top: 10px;
+  }
+  .navcontent {
+    list-style: none;
+    display: flex;
+  }
+  .navcontent li {
+    margin-right: 20px;
+  }
+  #marquee {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 30px;
+    width: 200px;
+    font-size: 2em;
+  }
+  #marquee a {
+    text-decoration: none;
+    color: #541400;
+  }
+  .icons-1{
+    display: flex;
+    margin-left: 1080px;
+    
+  } 
+  .icon
+  {
+    margin: 10px;
+  }
+  h2{
+    text-align: center;
+    margin-top: 30px;
+    color: #541400;
+  }
+  .imgg
+  {
+    width: 300px;
+    height: 300px;
+  }
+  .cont-1
+  {
+    text-align: center;
+    border: 0.5px solid #D9AC82;
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  .info
+  {
+    margin-top: 60px;
+  }
+
+  .btn-1
+  {
+    background-color: #D9AC82;
+    color: #541400;
+    border-radius: 50px;
+    width: 200px;
+    height: 40px;
+    
+  }
+
+  /************************************************************************/
+.Fot a {
+  text-decoration: none;
+}
+.top-fot {
+  background-color: #D9AC82;
+  height: 60px;
+  margin-top: 20px;
+}
+.content1 {
+  padding-top: 15px;
+}
+.content1 a {
+  color: #b8b6c1;
+  font-weight: bolder;
+  display: inline flex;
+  font-size: smaller;
+}
+.content1 span {
+  color: #f2dfde;
+  font-size: smaller;
+}
+.content1 p {
+  color: white;
+  font-weight: bold;
+}
+.mid-fot {
+  background-color: #6B3C2D;
+  height: 300px;
+}
+.mid-fot ul {
+  list-style: none;
+  color: white;
+  line-height: 2;
+}
+.content2 {
+  padding-top: 40px;
+}
+.mid-fot a {
+  color: #8a8a8a;
+}
+.SOCIAL li {
+  display: inline-flex;
+}
+.SOCIAL i {
+  font-size: 20px;
+  margin-left: 8px;
+}
+.Fot a:hover {
+  color: #541400;
+}
+.fot-bot {
+  background-color: #D9AC82;
+  height: 60px;
+}
+.fot-bot pre {
+  text-align: center;
+  padding-top: 20px;
+  color: white;
+}
+i {
+  font-size: 4em;
+}
+a {
+  text-decoration: none;
+  color: black;
+}

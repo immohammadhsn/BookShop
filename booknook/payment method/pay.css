@@ -1,0 +1,55 @@
+body{
+  background-color: #fdfce3;
+}
+.navv{
+  background-color: #D9AC82;
+}
+
+.logo {
+    margin-left: 50px;
+    margin-top: 5px;
+  }
+  .navitems {
+    margin-left: 700px;
+    margin-top: 10px;
+  }
+  .navcontent {
+    list-style: none;
+    display: flex;
+  }
+  .navcontent li {
+    margin-right: 20px;
+  }
+  #marquee {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 30px;
+    width: 200px;
+    font-size: 2em;
+  }
+  #marquee a {
+    text-decoration: none;
+    color: #541400;
+  }
+.icons-1{
+    display: flex;
+    margin-left: 1080px;
+    
+  } 
+  .icon
+  {
+    margin: 10px;
+  }
+.payment-option {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+}
+  
+.payment-option:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+h1{
+  color: #91653d;
+}

@@ -12,6 +12,10 @@ public class Book
     public string Title { get; set; }
     public string Img { get; set; }
     public string Description { get; set; }
+    public string? Category { get; set; }
+
+    public int pagesNumber { get; set; }
+
     public double Price { get; set; }
     public double Discount { get; set; }
 
@@ -22,9 +26,13 @@ public class Book
 public class BookDTO
 {
     public Guid AuthorId { get; set; }
+
     public string? Title { get; set; }
     public string? Img { get; set; }
     public string? Description { get; set; }
+    public string? Category { get; set; }
+
+    public int pagesNumber { get; set; }
     public double Price { get; set; }
     public double Discount { get; set; }
 
