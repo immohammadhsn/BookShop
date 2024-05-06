@@ -1,10 +1,11 @@
-﻿using BookShop.Shared;
+﻿using Blazored.LocalStorage;
+using BookShop.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Json;
 using static BookShop.Shared.ServiceResponses;
 
 namespace BookShop.Client.Services;
-public class AccountService(HttpClient _httpClient, AuthenticationStateProvider _authenticationStateProvider) : IAccountService
+public class AccountService(HttpClient _httpClient, AuthenticationStateProvider _authenticationStateProvider,ILocalStorageService localStorage) : IAccountService
 {
     CustomAuthenticationStateProvider customAuthenticationStateProvider = (CustomAuthenticationStateProvider)_authenticationStateProvider;
 
@@ -29,7 +30,11 @@ public class AccountService(HttpClient _httpClient, AuthenticationStateProvider 
         return result!;
     }
 
-    public async Task LogOut() => await customAuthenticationStateProvider.UpdateAuthenticationState();
+    public async Task LogOut()
+    {
+        await localStorage.RemoveItemAsync(ConstSettings.LocalStoredBooks);
+        await customAuthenticationStateProvider.UpdateAuthenticationState();
+    }
 
     public async Task<GeneralResponse> UpdateUserData(RegisterDTO updatedUser)
     {

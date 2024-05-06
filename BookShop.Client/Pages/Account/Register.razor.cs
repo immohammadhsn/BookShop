@@ -23,7 +23,7 @@ namespace BookShop.Client
             messageType = response.Succeeded ? MessageType.Success : MessageType.Error;
 
             if(response.Succeeded)
-                NavManager.NavigateTo($"Account/Login?returnUrl={Uri.EscapeDataString(NavManager.Uri)}", forceLoad: true);
+                NavManager.NavigateTo($"Account/Login?returnUrl={Uri.EscapeDataString(NavManager.Uri)}");
         }
     }
 }

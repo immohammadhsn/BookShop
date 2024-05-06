@@ -34,11 +34,5 @@ namespace BookShop.Client
                 NavManager.NavigateTo("/", true);
             }
         }
-
-        public async Task LogOut()
-        {
-            await AccountService.LogOut();
-            StateHasChanged();
-        }
     }
 }

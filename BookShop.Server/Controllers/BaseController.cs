@@ -32,7 +32,7 @@ public class BaseController<T,TDTO>(IBaseRepository<T> baseRepository) : Control
     }
 
     [HttpGet("GetAllWithIncludes")]
-    public async Task<IActionResult> GetAllWithIncludes(params string[] includes)
+    public async Task<IActionResult> GetAllWithIncludes([FromQuery]params string[] includes)
     {
         try
         {
@@ -41,7 +41,7 @@ public class BaseController<T,TDTO>(IBaseRepository<T> baseRepository) : Control
             if (entities is null)
                 return NoContent();
 
-            return Ok(entities);
+            return Ok(entities.ToList());
         }
         catch (Exception ex)
         {
@@ -64,6 +64,23 @@ public class BaseController<T,TDTO>(IBaseRepository<T> baseRepository) : Control
         catch (Exception ex)
         {
 
+            return StatusCode(500, ex.Message);
+        }
+    }
+    [HttpGet("WithIncludes/{id}")]
+    public async Task<IActionResult> GetByIdWithIncludesAsync(Guid id,[FromQuery] params string[] includes)
+    {
+        try
+        {
+            T? entity = await _baseRepository.ReadByIdWithIncludesAsync(id, includes);
+
+            if (entity is null)
+                return NoContent();
+
+            return Ok(entity);
+        }
+        catch (Exception ex)
+        {
             return StatusCode(500, ex.Message);
         }
     }
