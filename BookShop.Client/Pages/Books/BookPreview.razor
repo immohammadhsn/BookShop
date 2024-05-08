@@ -23,7 +23,7 @@
                 <a href="../admin/add.html"><img src="../Assets/edit.png" width="32px" height="32px" class="icon"></a>
                 <a href="../borrowed/borow.html"><img src="../Assets/borrow.png" width="32px" height="32px" class="icon"></a>
                 <a href="../admin/add.html"><img src="../Assets/book.png" width="32px" height="32px" class="icon"></a>
-                <a href="../SW_book_Proj/cart.html"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
+                <a href="./Cart"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
                 <a href="../profile/profile.html"><img src="../Assets/profile (1).png" width="32px" height="32px" class="icon"></a>
             </div>
 
@@ -32,27 +32,27 @@
 
     </div>
     <div class="container">
-        @if (Book is not null)
+        @if (BookInCart is not null)
         {
-            <div class="book-container">
-                <div class="book-details">
-                    <img src="@Book.Img" class="imgg im-hov">
+            <div class="BookInChart-container">
+                <div class="BookInChart-details">
+                    <img src="@BookInCart.Img" class="imgg im-hov">
                 </div>
 
                 <div class="info">
-                    <p><b>Book Name :</b> @Book.Title</p>
-                    <p> <b>Author : </b> @Book.Author?.Name</p>
-                    <p><b>Category : </b>@Book.Category </p>
-                    <p> <b>Book Pages:  </b> @Book.pagesNumber</p>
+                    <p><b>Book Name :</b> @BookInCart.Title</p>
+                    <p> <b>Author : </b> @BookInCart.Author?.Name</p>
+                    <p><b>Category : </b>@BookInCart.Category </p>
+                    <p> <b>Book Pages:  </b> @BookInCart.pagesNumber</p>
 
                     <p class="summary">
                         <b>Summery:  </b>
-                        <pre>@Book.Description
+                        <pre>@BookInCart.Description
                                </pre>
                     </p>
 
                     <p>
-                        <b>Price : </b>@Book.Price
+                        <b>Price : </b>@BookInCart.Price
                     </p>
 
                 </div>
@@ -72,13 +72,13 @@
 
     @if (isShowBuyForm)
     {
-       <EditForm Model="Book" OnValidSubmit="AddToCart" id="form-1">
+       <EditForm Model="BookInCart" OnValidSubmit="AddToCart" id="form-1">
             <div class="mb-3">
                 <label for="name1" class="form-label">Number of copies:</label>
                 <input type="number" class="form-control" id="name1" required>
             </div>
             <div class="mb-3">
-                <pre>Price:   200 L.E</pre>
+                <pre>Price:   @BookInCart.Price</pre>
             </div>
             <div class="mb-3">
                 <pre>Shipping:   30 L.E</pre>
@@ -91,7 +91,7 @@
     }
     @if (isShowBorrowForm)
     {
-        <EditForm Model="Book" OnValidSubmit="AddToCart" id="form-2">
+        <EditForm Model="BookInCart" OnValidSubmit="AddToCart" id="form-2">
             <div class="mb-3">
                 <label for="name2" class="form-label">Number of days:</label>
                 <input type="number" class="form-control" id="name2" required>
@@ -99,7 +99,7 @@
             <div class="mb-3">
                 <pre>Price:   30L.E</pre>
             </div>
-            <button type="submit" class="btn btn-primary btn-1" @onclick="()=>AddToCart()">Add to cart</button>
+            <button type="submit" class="btn btn-primary btn-1">Add to cart</button>
         </EditForm>
     }
     <!-- -Footer Section--->

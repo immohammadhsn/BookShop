@@ -12,7 +12,8 @@ public partial class BookPreview
     public ILocalStorageService localStorage { get; set; }
     [Parameter]
     public string BookId { get; set; }
-    Book? Book = new();
+
+    BookInCart? BookInCart;
 
     private bool isShowBuyForm = false;
     private bool isShowBorrowForm = false;
@@ -23,7 +24,10 @@ public partial class BookPreview
     {
         if (firstRender)
         {
-            Book = await _bookService.GetById(Guid.Parse(BookId));
+            var book = await _bookService.GetById(Guid.Parse(BookId));
+            string serBook = JsonSerializer.Serialize(book);
+            BookInCart= JsonSerializer.Deserialize<BookInCart>(serBook);
+
             StateHasChanged();
         }
 
@@ -35,23 +39,25 @@ public partial class BookPreview
 
     private async void AddToCart()
     {
-        if (isShowBuyForm && Book?.AvailableQuantity >= quantity)
+        if (isShowBuyForm && BookInCart?.AvailableQuantity >= quantity)
         {
-            await SaveIntoLocal(Book);
+            BookInCart.BookStatus = BookStatus.Buyed;
+            await SaveIntoLocal(BookInCart);
         }
-        else if (isShowBorrowForm && Book.AvailableQuantity >= quantity + 5)
+        else if (isShowBorrowForm && BookInCart?.AvailableQuantity >= quantity + 5)
         {
-            await SaveIntoLocal(Book);
+            BookInCart.BookStatus = BookStatus.Borrowed;
+            await SaveIntoLocal(BookInCart);
         }
     }
 
-    private async Task SaveIntoLocal(Book bookToSave)
+    private async Task SaveIntoLocal(BookInCart bookToSave)
     {
-        List<Book> exestingBooks=new();
+        List<BookInCart> exestingBooks = new();
         var jsonBooks = await localStorage.GetItemAsStringAsync(ConstSettings.LocalStoredBooks) ?? string.Empty;
 
         if (!string.IsNullOrEmpty(jsonBooks))
-            exestingBooks = JsonSerializer.Deserialize<List<Book>>(jsonBooks) ?? new();
+            exestingBooks = JsonSerializer.Deserialize<List<BookInCart>>(jsonBooks) ?? new();
 
         exestingBooks.Add(bookToSave);
 
@@ -60,3 +66,11 @@ public partial class BookPreview
     }
 
 }
+
+public class BookInCart : Book
+{
+    public BookStatus BookStatus { get; set; }
+    public double BorrowingPrice { get { return Price / 2; } set { } }
+}
+
+public enum BookStatus { Borrowed, Buyed }

@@ -100,7 +100,7 @@ public class AccountRepository(UserManager<ApplicationUser> userManager, RoleMan
             await roleManager.CreateAsync(new IdentityRole() { Name = ConstSettings.AdminRole });
 
         var usersNumber = userManager.Users.Count();
-        if (usersNumber <= 0)
+        if (usersNumber <= 1)
         {
             await userManager.AddToRoleAsync(newUser, ConstSettings.AdminRole);
             return new GeneralResponse(true, "Account Created");

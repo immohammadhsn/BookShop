@@ -34,11 +34,11 @@
                             <ChildContent Context ="FormContext">
                                 <DataAnnotationsValidator/>
                             <div class="input-box">
-                                <input type="text" placeholder="Username" required>
+                                <input type="text" @bind="RegisteredUser.DisplayedName" placeholder="Username" required>
                                 <i class="fa-solid fa-user" style="color: #ffffff;"></i>
                             </div>
                             <div class="input-box">
-                                <input @bind="RegisteredUser.DisplayedName" type="text" placeholder="Phone" required>
+                                <input typeof="number" @bind="RegisteredUser.PhoneNumber" type="text" placeholder="Phone" required>
                                 <i class="fa-solid fa-phone" style="color: #ffffff;"></i>
                             </div>
                             <div class="input-box">

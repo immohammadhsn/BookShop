@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using BookShop.Shared;
 using BookShop.Shared.Entities;
 using Microsoft.AspNetCore.Components;
+using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
 
 namespace BookShop.Client.Pages.Books
@@ -11,26 +12,37 @@ namespace BookShop.Client.Pages.Books
         [Inject]
         public ILocalStorageService localStorage { get; set; }
 
-        public List<Book> Books = new();
+        public List<BookInCart> BooksInCart = new();
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                Books = JsonSerializer.Deserialize<List<Book>>(await localStorage.GetItemAsStringAsync(ConstSettings.LocalStoredBooks) ?? string.Empty) ?? new();
+                var JsonBooks = await localStorage.GetItemAsStringAsync(ConstSettings.LocalStoredBooks);
+
+                if (string.IsNullOrEmpty(JsonBooks)) return;
+
+                BooksInCart = JsonSerializer.Deserialize<List<BookInCart>>(JsonBooks) ?? new();
                 StateHasChanged();
             }
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        private async Task DeleteBook(Book deletedBook)
+        private async Task DeleteBook(BookInCart deletedBook)
         {
 
-            Books.Remove(deletedBook);
+            BooksInCart.Remove(deletedBook);
             StateHasChanged();
 
-            var serialisedBook = JsonSerializer.Serialize(Books);
+            var serialisedBook = JsonSerializer.Serialize(BooksInCart);
             await localStorage.SetItemAsStringAsync(ConstSettings.LocalStoredBooks, serialisedBook);
         }
+
+        private double CalculateTotalPrice()
+        {
+            return BooksInCart.Sum(e => e.Price);
+        }
     }
+
 }
+
