@@ -1,4 +1,4 @@
-﻿@page "/AddBook"
+﻿@page "/AddBook/{BookId}"
 @namespace BookShop.Client
 
 @using BookShop.Client.Services
@@ -51,12 +51,21 @@
                     </div>
                 </nav>
                 <div class="wrapper">
+                    <StatusMessage @ref="addStatusMessage" />
                     <EditForm Model="AddedBook" OnValidSubmit="AddBook">
                         <ChildContent Context="FormContext">
                             <h4>Add a book</h4>
                             <div class="input-box file">
                                 <label for="photo" class="lab">add photo</label>
-                                <InputFile id="photo" OnChange="HandleFileChange" required />
+                                @if (!string.IsNullOrEmpty(AddedBook.Img))
+                                {
+                                    <img class="card-img card-img-top" src="@AddedBook.Img" />
+                                    <InputFile id="photo" OnChange="HandleFileChange" />
+                                }
+                                else
+                                {
+                                    <InputFile id="photo" OnChange="HandleFileChange" required />
+                                }
                             </div>
                             <div class="input-box">
                                 <InputText @bind-Value="AddedBook.Title" placeholder="Book Title" required />

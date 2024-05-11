@@ -1,19 +1,14 @@
-using BookShop.Client.Services;
 using BookShop.Shared.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http;
-using System;
-using static BookShop.Client.StatusMessage;
 
 namespace BookShop.Client;
 
 public partial class AddBooks
 {
-    private MessageType messageType;
-    private string? message;
+    [Parameter] public string? BookId { get; set; }
 
-    private DateTime dateTime = DateTime.Now;
+    private StatusMessage addStatusMessage = new();
 
     [SupplyParameterFromForm]
     public BookDTO AddedBook { get; set; } = new();
@@ -22,30 +17,54 @@ public partial class AddBooks
     IBrowserFile? file;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        authors = await _authorService.GetAll();
-        StateHasChanged();
+        if (firstRender)
+        {
+            if (BookId is not null)
+            {
+                AddedBook = await _bookService.GetDtoById(Guid.Parse(BookId)) ?? new();
+            }
+            authors = await _authorService.GetAll();
+            StateHasChanged();
+        }
         await base.OnAfterRenderAsync(firstRender);
     }
     public async Task AddBook()
     {
         await UploadBookPhoto();
-        var response = await _bookService.Add(AddedBook);
-
-        dateTime = DateTime.Now;
-
-        StateHasChanged();
-
-        if (response.IsSuccessStatusCode)
+        if (BookId is null)
         {
-            messageType = MessageType.Success;
-            message = "Book added Successfully";
-            NavManager.NavigateTo($"/");
+
+            var response = await _bookService.Add(AddedBook);
+
+            StateHasChanged();
+
+            if (response.IsSuccessStatusCode)
+            {
+                await addStatusMessage.Info("Book added Successfully");
+                NavManager.NavigateTo($"/");
+            }
+            else
+            {
+                await addStatusMessage.Info("Error while Adding Book");
+            }
         }
         else
         {
-            messageType = MessageType.Error;
-            message = "Error while adding book";
+            var response = await _bookService.Edit(Guid.Parse(BookId), AddedBook);
+
+            StateHasChanged();
+
+            if (response.IsSuccessStatusCode)
+            {
+                await addStatusMessage.Info("Book edited Successfully");
+                NavManager.NavigateTo($"/");
+            }
+            else
+            {
+                await addStatusMessage.Info("Error while editing Book");
+            }
         }
+
     }
 
     private async Task HandleFileChange(InputFileChangeEventArgs e)
