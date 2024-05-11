@@ -1,4 +1,5 @@
 ﻿@page "/Cart"
+@using BookShop.Client.Components
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@
     <link rel="shortcut icon" type="image/png" href="../Assets/spellbook.png">
     <title>BookNook</title>
     <link rel="stylesheet" href="../SW_book_Proj/cart.css">
-    <link rel="stylesheet" href="../Bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/css/cart.css">
 
 </head
@@ -17,6 +18,12 @@
         <Entry/>
     </NotAuthorized>
     <Authorized>
+    @if (isOrderSubmitted)
+            {
+                <SubmitCard SubmittedBooks="BooksInCart" TotalOrderPrice="TotalOrderPrice"/>
+            }
+    else
+    {
     <body>
     <nav class="navbar navbar-expand-lg navv">
         <div class="container-fluid">
@@ -58,7 +65,8 @@
         </div>
     </nav>
 
-    <h1>welcome to cart</h1>
+
+                 <h1>welcome to cart</h1>
 
     <div class="container">
         <div class="container-books">
@@ -72,40 +80,45 @@
 
                     <div class="info-one col-2">
                         <p>@book.Title</p>
-                        <p>2 days</p>
+                        <p></p><p></p><p></p><p></p>
                         <button class="btn btn-danger" @onclick="()=>DeleteBook(book)">Delete</button>
                     </div>
                     <div class="info-two col-2">
-                        <p>@Enum.GetName(book.BookStatus)</p>
-                        <p>Total: 60 LE</p>
+                        @if (book.BookStatus == BookStatus.Buyed)
+                        {
+                            <p>@Enum.GetName(book.BookStatus)</p>
+                            <p>Book price: @book.Price</p>
+                            <p>Number of copies: @book.Quantity</p>
+                            <p>Shipping: 30 L.E</p>
+                            <p>Total: @book.TotalPrice L.E</p>
+                        }
+                        else
+                        {
+                            <p>@Enum.GetName(book.BookStatus)</p>
+                            <p>Borrowing price: @book.BorrowingPrice</p>
+                            <p>Number of copies: @book.BorrowingPeriod</p>
+                            <p>Total: @book.TotalPrice L.E</p>
+                        }
                     </div>
                 </div>
             }
-
-        </div>
-    </div> 
-@*             <div class="img-two cont-1 row cont-2">
-                <div class="book-details col-4">
-                    <img src="oqad.jpg" class="imgg im-hov">
-                </div>
-
-                <div class="info-one col-2">
-                    <p>عقدك النفسية سجنك الابدي</p>
-                    <p>1 Copy</p>
-                    <div class="btn btn-danger">Delete</div>
-                    <a href="../payment method/pay.html">
-                        <div class="btn btn-primary">pay now</div>
-                    </a>
-                </div>
-
-                <div class="info-two col-2">
-                    <p>bought</p>
-                    <p>Total: 200 LE</p>
-                </div>
+             <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="font-weight-bold">Total Order Price: @CalculateTotalPrice() L.E</p>
             </div>
-    *@
+        </div>
+
+        <!-- Add Button to Submit Order -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-primary" @onclick="()=>isOrderSubmitted=true">Submit Order</button>
+            </div>
+        </div>
+        </div>
+    </div>    
+
     <!-- -Footer Section--->
-    <footer class="Fot">
+    <footer class="Fot mt-3">
         <!--Top-->
         <div class="top-fot">
             <div class="container content1">
@@ -160,6 +173,7 @@
         </div>
     </footer>
 </body>
+            }
     </Authorized>
 </AuthorizeView>
 </html>

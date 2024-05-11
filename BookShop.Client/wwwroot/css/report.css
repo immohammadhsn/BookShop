@@ -1,0 +1,27 @@
+body
+{
+    background-color: #fdfce3;
+}
+
+table
+{
+    border: 5px solid #6b3c2d;
+    margin-left: 570px;
+    margin-top: 200px;
+    text-align: center;
+}
+
+th,tr,td{
+    border: 1px double #D9AC82;
+    margin: 3px #D9AC82;
+
+}
+
+h4{
+    color:#7a5e44;
+}
+
+h1{
+    text-align: center;
+    margin-top: 30px;
+}

@@ -7,24 +7,23 @@ namespace BookShop.Client
 {
     public partial class Login
     {
-
-        private string? message;
+        [Inject]
+        public StatusMessage _LoginMessage { get; set; }
 
         [SupplyParameterFromForm]
         private LoginDTO LoggedUser { get; set; } = new();
 
-        private MessageType messageType;
-
-        private DateTime dateTime;
         CustomAuthenticationStateProvider? customAuthenticationStateProvider;
 
         public async Task LoginUser()
         {
 
             var response = await AccountService.LoginAccount(LoggedUser);
-            message = response.Message;
-            messageType = response.Succeeded ? MessageType.Success : MessageType.Error;
-            dateTime = DateTime.Now;
+
+            if (response.Succeeded)
+                await _LoginMessage.Info(response.Message);
+            else
+                await _LoginMessage.Error(response.Message);
             StateHasChanged();
 
             if (response.Succeeded)

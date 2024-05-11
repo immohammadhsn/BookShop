@@ -29,7 +29,7 @@
             <div class="row cont-1">
                 <div class="col-6 left-1">
                     <div class="wrapper">
-                        <StatusMessage Message="@message" Type="messageType" DateTime="dateTime" />
+                        <StatusMessage @ref="_RegisterMessage" />
                         <EditForm Model="RegisteredUser" method="post" OnValidSubmit="RegisterUser">
                             <ChildContent Context ="FormContext">
                                 <DataAnnotationsValidator/>

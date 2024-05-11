@@ -20,7 +20,7 @@ builder.Services.AddScoped<FileUploadService>();
 builder.Services.AddScoped<HttpClient>(sp => new() { BaseAddress = new("https://localhost:7278") });
 
 builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddSingleton<Cart>();
+builder.Services.AddSingleton<StatusMessage>();
 builder.Services.AddScoped<CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthorService>();
 builder.Services.AddScoped<BookService>();

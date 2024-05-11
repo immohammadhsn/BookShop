@@ -4,14 +4,32 @@ namespace BookShop.Client
 {
     public partial class StatusMessage
     {
-        [Parameter] public string? Message { get; set; }
+        private string? Message { get; set; }
         [Parameter] public int DurationInSeconds { get; set; } = 3;
-        [Parameter] public DateTime DateTime { get; set; }
-        [Parameter] public MessageType Type { get; set; } = MessageType.Success;
+        private MessageType Type { get; set; } = MessageType.Success;
 
         private bool isVisible = false;
 
-        protected override async Task OnParametersSetAsync()
+
+        public async Task Error(string message)
+        {
+            Type = MessageType.Error;
+            Message = message;
+            await DisplayMessage();
+        }
+        public async Task Info(string message)
+        {
+            Type = MessageType.Success;
+            Message = message;
+            await DisplayMessage();
+        }
+        public async Task Warning(string message)
+        {
+            Type = MessageType.Warning;
+            Message = message;
+            await DisplayMessage();
+        }
+        protected async Task DisplayMessage()
         {
             if (Message != null)
             {
@@ -29,7 +47,7 @@ namespace BookShop.Client
                 StateHasChanged();
             }
         }
-        
+
 
         private string GetBackgroundColor()
         {

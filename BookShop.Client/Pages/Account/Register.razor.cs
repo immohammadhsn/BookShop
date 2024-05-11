@@ -9,18 +9,18 @@ namespace BookShop.Client
         [SupplyParameterFromForm]
         public RegisterDTO RegisteredUser { get; set; } = new();
 
-        private MessageType messageType;
-        private string? message;
-
-        private DateTime dateTime = DateTime.Now;
+        [Inject]
+        public StatusMessage _RegisterMessage { get; set; }
 
         public async Task RegisterUser()
         {
             var response = await AccountService.CreateAccount(RegisteredUser);
-            message = response.Message;
-            dateTime = DateTime.Now;
+
+            if (response.Succeeded)
+                await _RegisterMessage.Info(response.Message);
+            else
+                await _RegisterMessage.Error(response.Message);
             StateHasChanged();
-            messageType = response.Succeeded ? MessageType.Success : MessageType.Error;
 
             if(response.Succeeded)
                 NavManager.NavigateTo($"Account/Login?returnUrl={Uri.EscapeDataString(NavManager.Uri)}");

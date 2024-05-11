@@ -1,0 +1,70 @@
+﻿@using BookShop.Client.Pages.Books
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="website icon" type="png" href="../Assets/spellbook.png">
+    <title> BookNook </title>
+    <link rel="stylesheet" href="/css/report.css">
+</head>
+<body>
+    <h1>
+        thank you!
+    </h1>
+    <table>
+        <tr>
+            <th>
+                <h4>Book</h4>
+            </th>
+            <th>
+                <h4>Quantity</h4>
+            </th>
+            <th>
+                <h4>date</h4>
+            </th>
+            <th>
+                <h4>transaction</h4>
+            </th>
+            <th>
+                <h4>Price</h4>
+            </th>
+        </tr>
+        @foreach (var book in SubmittedBooks)
+        {
+        <tr>
+            <td>
+               @book.Title
+            </td>
+            <td>
+                   @(quantity=book.BookStatus==BookStatus.Buyed?book.Quantity:book.BorrowingPeriod)
+                </td>
+            <td>
+                @DateTime.Now.Date
+            </td>
+            <td>
+                @book.BookStatus
+            </td>
+            <td>
+                @book.TotalPrice
+            </td>
+        </tr>
+        }
+        <tr>
+            <td colspan="4">
+                Total Price:
+            </td>
+            <td>
+               @TotalOrderPrice L.E
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+
+@code
+{
+    [Parameter] public List<BookInCart> SubmittedBooks { get; set; }
+    [Parameter] public double TotalOrderPrice { get; set; }
+    private int quantity = 0;
+}

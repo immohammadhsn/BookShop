@@ -11,8 +11,9 @@ namespace BookShop.Client.Pages.Books
     {
         [Inject]
         public ILocalStorageService localStorage { get; set; }
-
         public List<BookInCart> BooksInCart = new();
+        private double TotalOrderPrice;
+        private bool isOrderSubmitted = false;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -38,10 +39,8 @@ namespace BookShop.Client.Pages.Books
             await localStorage.SetItemAsStringAsync(ConstSettings.LocalStoredBooks, serialisedBook);
         }
 
-        private double CalculateTotalPrice()
-        {
-            return BooksInCart.Sum(e => e.Price);
-        }
+        private double CalculateTotalPrice() => TotalOrderPrice = BooksInCart.Sum(e => e.TotalPrice);
+
     }
 
 }

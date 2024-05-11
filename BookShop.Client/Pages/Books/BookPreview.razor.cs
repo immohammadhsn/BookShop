@@ -1,4 +1,5 @@
 using Blazored.LocalStorage;
+using BookShop.Client.Services;
 using BookShop.Shared;
 using BookShop.Shared.Entities;
 using Microsoft.AspNetCore.Components;
@@ -10,6 +11,10 @@ public partial class BookPreview
 {
     [Inject]
     public ILocalStorageService localStorage { get; set; }
+
+    [Inject]
+    public StatusMessage _StatusMessage { get; set; }
+
     [Parameter]
     public string BookId { get; set; }
 
@@ -17,7 +22,6 @@ public partial class BookPreview
 
     private bool isShowBuyForm = false;
     private bool isShowBorrowForm = false;
-    private int quantity;
 
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -26,7 +30,7 @@ public partial class BookPreview
         {
             var book = await _bookService.GetById(Guid.Parse(BookId));
             string serBook = JsonSerializer.Serialize(book);
-            BookInCart= JsonSerializer.Deserialize<BookInCart>(serBook);
+            BookInCart = JsonSerializer.Deserialize<BookInCart>(serBook);
 
             StateHasChanged();
         }
@@ -39,15 +43,33 @@ public partial class BookPreview
 
     private async void AddToCart()
     {
-        if (isShowBuyForm && BookInCart?.AvailableQuantity >= quantity)
+        if (isShowBuyForm)
         {
-            BookInCart.BookStatus = BookStatus.Buyed;
-            await SaveIntoLocal(BookInCart);
+            if (BookInCart?.AvailableQuantity >= BookInCart.Quantity)
+            {
+                BookInCart.BookStatus = BookStatus.Buyed;
+                await SaveIntoLocal(BookInCart);
+
+                NavManager.NavigateTo("/Cart");
+            }
+            else
+            {
+                await _StatusMessage.Warning($"Only {BookInCart.AvailableQuantity} copies available to buy");
+            }
         }
-        else if (isShowBorrowForm && BookInCart?.AvailableQuantity >= quantity + 5)
+        else if (isShowBorrowForm)
         {
-            BookInCart.BookStatus = BookStatus.Borrowed;
-            await SaveIntoLocal(BookInCart);
+            if (BookInCart?.AvailableQuantity >= BookInCart.Quantity + 5)
+            {
+
+                BookInCart.BookStatus = BookStatus.Borrowed;
+                await SaveIntoLocal(BookInCart);
+
+                NavManager.NavigateTo("/Cart");
+            }
+
+            else
+                await _StatusMessage.Warning($"Only {BookInCart.AvailableQuantity-5} copies available to borrow");
         }
     }
 
@@ -70,7 +92,10 @@ public partial class BookPreview
 public class BookInCart : Book
 {
     public BookStatus BookStatus { get; set; }
-    public double BorrowingPrice { get { return Price / 2; } set { } }
+    public int BorrowingPeriod { get; set; }
+    public double BorrowingPrice { get { return Price*0.25; } set { } }
+    public int Quantity { get; set; }
+    public double TotalPrice {get => BookStatus.Equals(BookStatus.Buyed) ? (Price * Quantity) + 30 : (BorrowingPrice +BorrowingPeriod * 0.25); set { } }
 }
 
 public enum BookStatus { Borrowed, Buyed }
