@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace BookShop.Shared.Entities
         public int Quantity { get; set; }
         public DateTime Date { get; set; }
         public BookStatus BookStatus { get; set; }
+        public double Profit { get; set; }
     }
     public class SoldBookDTO
     {
@@ -22,5 +24,6 @@ namespace BookShop.Shared.Entities
         public int Quantity { get; set; }
         public DateTime Date { get; set; }
         public BookStatus BookStatus { get; set; }
+        public double Profit { get; set; }
     }
 }

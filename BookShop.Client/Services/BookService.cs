@@ -29,12 +29,14 @@ namespace BookShop.Client.Services
 
             if (response.IsSuccessStatusCode)
             {
-                SoldBookDTO sold = new() { BookId = soldBook.Id, BookStatus = soldBook.BookStatus, Date = DateTime.Now, Quantity = soldBook.SoldQuantity + soldBook.BorrowedQuantity };
+                SoldBookDTO sold = new() { BookId = soldBook.Id, BookStatus = soldBook.BookStatus, Date = DateTime.Now, Quantity = soldBook.SoldQuantity + soldBook.BorrowedQuantity, Profit = soldBook.TotalPrice };
                 response = await _httpClient.PostAsJsonAsync("/api/SoldBook", sold);
             }
 
             return response;
         }
+
+        public async Task<List<SoldBook>?> GetSoldBooks() => await _httpClient.GetFromJsonAsync<List<SoldBook>>($"api/SoldBook/GetAllWithIncludes?includes={nameof(SoldBook.Book)}");
     }
 
 }
