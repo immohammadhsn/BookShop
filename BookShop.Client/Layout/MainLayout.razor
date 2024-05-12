@@ -5,15 +5,7 @@
     </div> *@
 
     <main>
-        <AuthorizeView>
-            <Authorized>
-                <div class="top-row px-4">
-                    <p>hello @context.User.Identity.Name</p>
-                    <button @onclick="@(()=>{AccountService.LogOut(); NavManager.NavigateTo("/Account/Login"); })" class="btn-outline-danger">LogOut</button>
-                    @* <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a> *@
-                </div>
-            </Authorized>
-        </AuthorizeView>
+
         <article class="content px-4">
             @Body
         </article>

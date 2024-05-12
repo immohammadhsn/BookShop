@@ -1,15 +1,140 @@
-﻿
-@namespace BookShop.Client
+﻿@namespace BookShop.Client
 
 @page "/Account/Manage"
-<h3>Manage</h3>
+@using System.Security.Claims
+<AuthorizeView>
+    <NotAuthorized>
+        <Entry />
+    </NotAuthorized>
+    <Authorized>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="website icon" type="png" href="../Assets/spellbook.png">
+            <title> BookNook </title>
+            <link rel="stylesheet" href="/css/BookPreview.css">
+            <link rel="stylesheet" href="/css/profile.css">
+        </head>
+        <body>
+            <nav class="navbar navbar-expand-lg navv">
+                <div class="container-fluid">
+                    <a id="logo" class="navbar-brand logo" href="#">
+                        <img src="../Assets/spellbook.png" width="70px" height="60px"
+                             alt="">
+                    </a>
+                    <div id="marquee">
+                        <marquee scrollamount="5"> <a href="#" class="logo">BookNook</a></marquee>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <div class="icons-1">
+                            <li>
+                                <a href="./MonthlyReport"><img src="../Assets/report.png" width="32px" height="32px" class="icon"></a>
+                            </li>
+                            <li>
+                                <a href="./AddBook"><img src="../Assets/book.png" width="32px" height="32px" class="icon"></a>
+                            </li>
+                            <li>
+                                <a href="./Cart"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
+                            </li>
+                            <li>
+                                <a href="./Account/Manage"><img src="../Assets/profile (1).png" width="32px" height="32px" class="icon"></a>
+                            </li>
+                    </div>
+                    </ul>
+                </div>
+                </div>
+            </nav>
+            <br>
+            <br>
+            <div class="profile">
+                <img src="../Assets/profile (1).png" alt="Profile Picture">
+            </div>
+            <div class="content">
+            </div>
+            <br>
+            <br>
+            <center>
 
-@if (isAdmin)
-{
-    <img src="dx/Assets/Habiby ya Admin.jpg" width="550" />
-}
-else
-{
-    <img src="/Assets/habiby ya user.jpg" width="550" />
-}
+                <label for="name">Name:@context.User.FindFirst(ClaimTypes.Name)?.Value</label>
 
+            </center>
+            <br>
+            <br>
+            <center> <label for="phone">Phone: <tel>@context.User.FindFirst(ClaimTypes.MobilePhone)?.Value</tel></label></center>
+            <br>
+            <br>
+            <center>
+                <label for="email">Email: @context.User.FindFirst(ClaimTypes.Email)?.Value</label>
+            </center>
+            <br>
+            <center>
+                <button @onclick="@(()=>{AccountService.LogOut(); NavManager.NavigateTo("/Account/Login"); })">LogOut</button>
+            </center>
+            <br>
+            <br>
+
+
+            <!-- -Footer Section--->
+            <footer class="Fot">
+                <!--Top-->
+                <div class="top-fot">
+                    <div class="container content1">
+                        <div class="row">
+                            <div class="col-11">
+                                <a href="./Home">BookNook ></a><span>home</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Top end-->
+                <!--Mid-->
+                <div class="mid-fot">
+                    <div class="container content2">
+                        <div class="row">
+                            <div class="col-3">
+                                <ul>
+                                    <li>
+                                        <h5>CONTACT US</h5>
+                                    </li>
+                                    <li><a href="#">Customer Service</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-3">
+                                <ul>
+                                    <li>
+                                        <h5>Registeration</h5>
+                                    </li>
+                                    <li><a href=".Account/Register">Signup</a></li>
+                                    <li><a href=".Account/Login">Login</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-3">
+                                <ul>
+                                    <li>
+                                        <h5>about me</h5>
+                                    </li>
+                                    <li><a href="./Account/Manage"> profile </a></li>
+                                    <li><a href="./Cart">cart</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--mid end-->
+                <!--bot-->
+                <div class="fot-bot">
+                    <div class="container">
+                        <pre class="my-sig">Copyright @@2024 All rights reserved | This template is made by GPT team </pre>
+                    </div>
+                </div>
+            </footer>
+
+            <script src="read page.css"></script>
+        </body>
+    </html>
+</Authorized>
+</AuthorizeView>
+<!DOCTYPE html>
