@@ -14,6 +14,7 @@ public partial class AddBooks
     public BookDTO AddedBook { get; set; } = new();
 
     private List<Author>? authors;
+    private string BookPhotoPreview;
     IBrowserFile? file;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -69,7 +70,13 @@ public partial class AddBooks
 
     private async Task HandleFileChange(InputFileChangeEventArgs e)
     {
-        file = e.File;
+            file = e.File;
+            using (var memoryStream = new MemoryStream())
+            {
+                await e.File.OpenReadStream().CopyToAsync(memoryStream);
+                BookPhotoPreview = Convert.ToBase64String(memoryStream.ToArray());
+            }
+        StateHasChanged();
     }
 
     async Task UploadBookPhoto()

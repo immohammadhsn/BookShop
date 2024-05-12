@@ -1,4 +1,5 @@
 ﻿@using BookShop.Client.Pages.Books
+@using BookShop.Shared.Entities
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +38,7 @@
                @book.Title
             </td>
             <td>
-                   @(quantity=book.BookStatus==BookStatus.Buyed?book.Quantity:book.BorrowingPeriod)
+                   @(quantity=book.BookStatus==BookStatus.Buyed?book.SoldQuantity:book.BorrowingPeriod)
                 </td>
             <td>
                 @DateTime.Now.Date

@@ -92,3 +92,14 @@ h4 {
     color: #D9AC82;
     font-weight: bold;
 }
+
+.image-preview {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    overflow: hidden;
+}
+
+    .image-preview img {
+        width: 100%; /* Make the image fill the container width */
+        height: auto; /* Maintain aspect ratio */
+    }

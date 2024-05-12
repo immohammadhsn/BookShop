@@ -15,7 +15,7 @@
         <Entry />
     </NotAuthorized>
     <Authorized>
-
+        <StatusMessage @ref="statusMessage" />
         <nav class="navbar navbar-expand-lg navv">
             <div class="container-fluid">
                 <a id="logo" class="navbar-brand logo" href="#">
@@ -38,18 +38,15 @@
 
 
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="../borrowed/borow.html" class="nav-link"><img src="../Assets/borrow.png" width="32px" height="32px" class="icon"></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../admin/add.html" class="nav-link"><img src="../Assets/book.png" width="32px" height="32px" class="icon"></a>
-                        </li>
-                        <!-- <li class="nav-item">
-                            <a href ="#" class="nav-link"><img src="../Assets/edit.png" width="32px" height="32px" class="icon"></a>
-                        </li> -->
-                        <li class="nav-item">
-                            <a href="./Cart" class="nav-link"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
-                        </li>
+                        @if (context.User.IsInRole(ConstSettings.AdminRole))
+                        {
+                            <li class="nav-item">
+                                <a href="./AddBook" class="nav-link"><img src="../Assets/book.png" width="32px" height="32px" class="icon"></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./Cart" class="nav-link"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a href="#" class="nav-link"><img src="../Assets/profile (1).png" width="32px" height="32px" class="icon"></a>
                         </li>
@@ -70,7 +67,7 @@
                                 <div class="show">
                                     <h5>@Book.Title</h5>
                                     <button type="button" class="btn btn-1" @onclick="@(()=>NavManager.NavigateTo($"/Preview/{Book.Id}"))">Preview</button>
-                                    <button type="button" class="btn btn-1" @onclick="@(()=>NavManager.NavigateTo($"/Preview/{Book.Id}"))">Delete</button>
+                                    <button type="button" class="btn btn-1" @onclick="@(()=>DeleteBook(Book.Id))">Delete</button>
                                 </div>
                             </div>
                         </div>

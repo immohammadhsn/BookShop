@@ -8,5 +8,6 @@ namespace BookShop.Server.Data
     {
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<SoldBook> SoldBooks { get; set; }
     }
 }

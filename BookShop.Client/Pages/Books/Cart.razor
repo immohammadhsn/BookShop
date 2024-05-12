@@ -1,5 +1,6 @@
 ﻿@page "/Cart"
 @using BookShop.Client.Components
+@using BookShop.Shared.Entities
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,6 +70,7 @@
                  <h1>welcome to cart</h1>
 
     <div class="container">
+        <StatusMessage @ref="_StatusMessage"/>
         <div class="container-books">
             @foreach (var book in BooksInCart)
             {
@@ -88,7 +90,7 @@
                         {
                             <p>@Enum.GetName(book.BookStatus)</p>
                             <p>Book price: @book.Price</p>
-                            <p>Number of copies: @book.Quantity</p>
+                            <p>Number of copies: @book.SoldQuantity</p>
                             <p>Shipping: 30 L.E</p>
                             <p>Total: @book.TotalPrice L.E</p>
                         }
@@ -111,7 +113,7 @@
         <!-- Add Button to Submit Order -->
         <div class="row">
             <div class="col-md-12 text-center">
-                <button class="btn btn-primary" @onclick="()=>isOrderSubmitted=true">Submit Order</button>
+                <button class="btn btn-primary" @onclick="()=>SubmitOrder()">Submit Order</button>
             </div>
         </div>
         </div>

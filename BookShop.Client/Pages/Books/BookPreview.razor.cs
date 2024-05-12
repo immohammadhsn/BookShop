@@ -12,9 +12,6 @@ public partial class BookPreview
     [Inject]
     public ILocalStorageService localStorage { get; set; }
 
-    [Inject]
-    public StatusMessage _StatusMessage { get; set; }
-
     [Parameter]
     public string BookId { get; set; }
 
@@ -45,7 +42,7 @@ public partial class BookPreview
     {
         if (isShowBuyForm)
         {
-            if (BookInCart?.AvailableQuantity >= BookInCart.Quantity)
+            if (BookInCart?.AvailableQuantity >= BookInCart.SoldQuantity)
             {
                 BookInCart.BookStatus = BookStatus.Buyed;
                 await SaveIntoLocal(BookInCart);
@@ -59,7 +56,7 @@ public partial class BookPreview
         }
         else if (isShowBorrowForm)
         {
-            if (BookInCart?.AvailableQuantity >= BookInCart.Quantity + 5)
+            if (BookInCart?.AvailableQuantity >= BookInCart.SoldQuantity + 5)
             {
 
                 BookInCart.BookStatus = BookStatus.Borrowed;
@@ -94,8 +91,7 @@ public class BookInCart : Book
     public BookStatus BookStatus { get; set; }
     public int BorrowingPeriod { get; set; }
     public double BorrowingPrice { get { return Price*0.25; } set { } }
-    public int Quantity { get; set; }
-    public double TotalPrice {get => BookStatus.Equals(BookStatus.Buyed) ? (Price * Quantity) + 30 : (BorrowingPrice +BorrowingPeriod * 0.25); set { } }
+    public int SoldQuantity { get; set; }
+    public double TotalPrice {get => BookStatus.Equals(BookStatus.Buyed) ? (Price * SoldQuantity) + 30 : (BorrowingPrice +BorrowingPeriod * 0.25); set { } }
 }
 
-public enum BookStatus { Borrowed, Buyed }

@@ -41,6 +41,25 @@ namespace BookShop.Client.Pages.Books
 
         private double CalculateTotalPrice() => TotalOrderPrice = BooksInCart.Sum(e => e.TotalPrice);
 
+        private async Task SubmitOrder()
+        {
+            HttpResponseMessage response = new();
+            foreach (var book in BooksInCart)
+            {
+
+                response = await _bookService.AddSoldBook(book);
+                if (!response.IsSuccessStatusCode)
+                    break;
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                isOrderSubmitted = true;
+                await _StatusMessage.Info("order submitted Successfully");
+            }
+            else
+                await _StatusMessage.Error("Somthing went wrong while submitting the order");
+        }
+
     }
 
 }

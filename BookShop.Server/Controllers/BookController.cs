@@ -9,7 +9,9 @@ namespace BookShop.Server.Controllers
     public class BookController (IBaseRepository<Book> baseRepository):BaseController<Book,BookDTO>(baseRepository)
     {
     }
-
+    public class SoldBookController(IBaseRepository<SoldBook> baseRepository) : BaseController<SoldBook, SoldBookDTO>(baseRepository)
+    {
+    }
     public class AuthorController(IBaseRepository<Author> baseRepository) : BaseController<Author,AuthorDTO>(baseRepository)
     {
     }

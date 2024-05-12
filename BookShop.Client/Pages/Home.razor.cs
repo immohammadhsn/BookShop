@@ -6,6 +6,8 @@ namespace BookShop.Client.Pages
     {
         List<Book> AvailableBooks = new();
         string searchValue = "";
+
+        private StatusMessage statusMessage = new();
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -21,7 +23,18 @@ namespace BookShop.Client.Pages
             AvailableBooks = books;
             StateHasChanged();
         }
-
+        async Task DeleteBook(Guid bookId)
+        {
+            var response = await _bookService.Delete(bookId);
+            if (response.IsSuccessStatusCode)
+            {
+                await statusMessage.Info("Book Deleted Successfully");
+                AvailableBooks = await _bookService.GetAll();
+                StateHasChanged();
+            }
+            else
+                await statusMessage.Error("Error while Deleting book");
+        }
 
     }
 }
