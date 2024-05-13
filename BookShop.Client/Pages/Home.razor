@@ -41,23 +41,19 @@
                         <img src="../Assets/Search-icon.png" alt="search icon" />
                     </div>
                 </li>
+
                 <li>
-                    <a href="../borrowed/borow.html">
-                        <img src="../Assets/borrow.png" width="32px" height="32px" class="icon">
-                    </a>
-                </li>
-                <li>
-                    <a href="../admin/add.html" class="deleteable-icon">
+                    <a href="./AddBook" class="deleteable-icon">
                         <img src="../Assets/book.png" width="32px" height="32px" class="icon">
                     </a>
                 </li>
                 <li>
-                    <a href="../SW_book_Proj/cart.html">
+                    <a href="./Cart">
                         <img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon">
                     </a>
                 </li>
                 <li>
-                    <a href="../profile/profile.html">
+                    <a href="./Account/Manage">
                         <img src="../Assets/profile (1).png" width="32px" height="32px" class="icon">
                     </a>
                 </li>
@@ -76,87 +72,20 @@
     <h2>Explore your favourite book !</h2>
     <div class="container text-center cont-1">
         <div class="d-flex justify-content-around gap-5 flex-wrap">
-            <div class="image-container ">
-                <img src="../Assets/oqad.jpg" class="imgg im-hov">
-                <div class="overlay">
-                    <div class="show">
-                        <h5 class="text-light mb-4">عقدك النفسية سجنك الابدى</h5>
-                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
+
+            @foreach (var book in AvailableBooks)
+            {
+
+                <div class="image-container">
+                    <img src="@book.Img" class="imgg">
+                    <div class="overlay">
+                        <div class="show">
+                            <h5 class="text-light mb-4">@book.Title</h5>
+                            <button type="button" class="custom-btn btn-1" @onclick="@(()=>NavManager.NavigateTo($"/Preview/{book.Id}"))">Preview</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="image-container">
-                <img src="../Assets/men-women.jpg" class="imgg">
-                <div class="overlay">
-                    <div class="show">
-                        <h5 class="text-light mb-4">الرجال من المريخ و النساء من الزهرة</h5>
-                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="image-container">
-                <img src="../Assets/ontha.jpg" class="imgg">
-                <div class="overlay">
-                    <div class="show">
-                        <h5 class="text-light mb-4">فى قلبى انثى عبرية</h5>
-                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="image-container">
-                <img src="../Assets/atomic.jfif" class="imgg">
-                <div class="overlay">
-                    <div class="show">
-                        <h5 class="text-light mb-4">العادات الذرية</h5>
-                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="image-container">
-                <img src="../Assets/cuteness.jfif" class="imgg">
-                <div class="overlay">
-                    <div class="show">
-                        <h5 class="text-light mb-4">لا تكن لطيفا اكثر من اللازم</h5>
-                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="image-container">
-                <img src="../Assets/rich-dad-poor-dad-book-product.jpg" class="imgg">
-                <div class="overlay">
-                    <div class="show">
-                        <h5 class="text-light mb-4">الاب الغنى و الاب الفقير</h5>
-                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="image-container">
-                <img src="../Assets/zland.jpg" class="imgg">
-                <div class="overlay">
-                    <div class="show">
-                        <h5 class="text-light mb-4">ارض زيكولا</h5>
-                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="image-container">
-                <img src="../Assets/miserables-victor-hugo-almarkez-althaqafi.webp" class="imgg">
-                <div class="overlay">
-                    <div class="show">
-                        <h5 class="text-light mb-4">البؤساء</h5>
-                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="image-container">
-                <img src="../Assets/حياتي-بقربك.jpeg-300x385.jpg" class="imgg">
-                <div class="overlay">
-                    <div class="show">
-                        <h5 class="text-light mb-4">حياتى بقربك</h5>
-                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
     <div class="rate">
