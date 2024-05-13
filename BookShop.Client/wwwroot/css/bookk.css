@@ -1,0 +1,63 @@
+
+.navv {
+    background-color: #D9AC82;
+}
+
+.btn-1{
+    background-color: #6B3C2D;
+    width: 150px;
+    height: 50px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    padding: 10px 0 70px 0;
+
+}
+
+.buy, .borrow {
+text-decoration: none;
+    padding: 10px 80px;
+    background-color: #D9AC82;
+    color: #541400;
+    border: none;
+    border-radius: 40px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.buy:hover, .borrow:hover {
+    background-color: #6B3C2D;
+}
+
+@media (max-width:1025px) {
+    .book-details{
+        width: 35% !important;
+        height: fit-content;
+        margin-left: 1rem;
+    }
+    .info{
+        width: 65% !important;
+    }
+}
+
+@media (max-width:720px) {
+    .cont{
+        flex-direction: column !important;
+        align-items: center;
+    }
+}
+
+@media (max-width:590px) {
+    .buttons{
+        flex-direction: column;
+        width: 50%;
+        align-items: center;
+    }
+}

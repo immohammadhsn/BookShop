@@ -1,122 +1,163 @@
 ﻿@page "/Preview/{BookId}"
 @using BookShop.Shared.Entities
 
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="/Assets/spellbook.png">
+    <link rel="shortcut icon" type="image/png" href="../Assets/spellbook.png">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/home.css">
     <title>BookNook</title>
-    <link rel="stylesheet" href="/css/BookPreview.css">
+    <link rel="stylesheet" href="/css/bookk.css">
 
 </head>
+
 <body>
-    <div class="container-fluid">
-        <nav class="navv">
+    <header class="navv d-flex justify-content-between align-items-center pt-3 pb-3 w-100">
+        <div class="d-flex gap-2 align-items-center ms-lg-5 ms-md-4 ms-sm-3 ms-2">
+            <a id="logo" class="navbar-brand logo" href="#">
+                <img src="../Assets/spellbook.png" height="60px" alt="">
+            </a>
             <div id="marquee">
-                <a id="logo" class="navbar-brand logo" href="#"><img src="/Assets/spellbook.png" width="70px" height="60px" alt=""></a>
-                <marquee scrollamount="5"> <a href="#" class="logo">BookNook</a></marquee>
+                <marquee scrollamount="5">
+                    <a href="home.html" class="logo">BookNook</a>
+                </marquee>
             </div>
-
-            <AuthorizeView>
-                <Authorized>
-
-                    <div class="icons-1">
-                        @if (context.User.IsInRole(ConstSettings.AdminRole))
-                        {
-                            <a href="@($"./AddBook/{BookInCart?.Id}")"><img src="../Assets/edit.png" width="32px" height="32px" class="icon"></a>
-                            <a href="./AddBook"><img src="../Assets/book.png" width="32px" height="32px" class="icon"></a>
-                        }
-                        <a href="./Cart"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
-                        <a href="../profile/profile.html"><img src="../Assets/profile (1).png" width="32px" height="32px" class="icon"></a>
-                    </div>
-                </Authorized>
-            </AuthorizeView>
+        </div>
 
 
+        <div class="icons-1" id="navbarNavDropdown">
+            <ul class="text-decoration-none mb-0 d-flex gap-lg-2 gap-md-1 gap-0 list-unstyled align-items-center">
+                <AuthorizeView>
+                    @if (context.User.IsInRole(ConstSettings.AdminRole))
+                    {
+                        <li>
+                            <a href="@($"./AddBook/{BookInCart?.Id}")">
+                                <img src="../Assets/edit.png" width="32px" height="32px" class="icon">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./AddBook" class="deleteable-icon">
+                                <img src="../Assets/book.png" width="32px" height="32px" class="icon">
+                            </a>
+                        </li>
+                    }
+                </AuthorizeView>
 
-        </nav>
+                <li>
+                    <a href="./Cart">
+                        <img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon">
+                    </a>
+                </li>
+                <li>
+                    <a href="./Account/Manage">
+                        <img src="../Assets/profile (1).png" width="32px" height="32px" class="icon">
+                    </a>
+                </li>
 
-    </div>
-
+            </ul>
+        </div>
+    </header>
     @if (BookInCart is not null)
     {
-        <div class="container">
-            <div class="book-container">
-                <div class="book-details">
-                    <img src="@BookInCart.Img" class="imgg im-hov">
+        <div class="mt-5 w-100">
+            <div class="cont d-flex w-100 gap-5 justify-content-center">
+                <div class="book-details w-25">
+                    <img src="@BookInCart.Img" class="imgg im-hov w-100">
                 </div>
+                <div class="info w-50">
+                    <table class="table table-borderless text-start">
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="bg-transparent">Book Name :</th>
+                                <td class="bg-transparent">@BookInCart.Title</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="bg-transparent">Author :</th>
+                                <td class="bg-transparent"> @BookInCart?.Author?.Name</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="bg-transparent">Category : </th>
+                                <td class="bg-transparent"> @BookInCart?.Category </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="bg-transparent">Book Pages:</th>
+                                <td class="bg-transparent">@BookInCart?.pagesNumber</td>
+                            </tr>
 
-                <div class="info">
-                    <p><b>Book Name :</b>@BookInCart.Title</p>
-                    <p> <b>Author : </b> @BookInCart.Author</p>
-                    <p><b>Category : </b>@BookInCart.Category </p>
-                    <p> <b>Book Pages:  </b> @BookInCart.pagesNumber</p>
-                    <p> <b>Available Copies:  </b> @BookInCart.AvailableQuantity</p>
-
-                    <p class="summary">
-                        <b>Summery:  </b>
-                        <p>@BookInCart.Description</p>
-                    </p>
-
-                    <p>
-                        <b>Price : </b>@BookInCart.Price L.E
-                    </p>
-
+                            <tr>
+                                <th scope="row" class="bg-transparent">Summery:</th>
+                                <td class="bg-transparent">
+                                    <pre class="text-start " style="direction: rtl;white-space: pre-wrap;width: fit-content;"> @BookInCart.Description</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="bg-transparent">Price : </th>
+                                <td class="bg-transparent">@BookInCart.Price L.E</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
 
-            <div class="container mt-5 buttons">
-                <button id="btn-1" class="btn buy me-3" @onclick="()=>ShowBuyForm()">BUY</button>
-
+            <div class="container mt-5 buttons gap-3">
+                <button id="btn-1" class="btn buy" @onclick="()=>ShowBuyForm()">BUY</button>
                 <button id="btn-2" class="btn borrow" @onclick="()=>ShowBorrowForm()">Borrow</button>
             </div>
-            <div id="form-container"></div>
+
+            <div id="form-container" class="m-auto ">
+                @if (isShowBuyForm)
+                {
+                    BookInCart.BookStatus = BookStatus.Buyed;
+
+                    <StatusMessage @ref="_StatusMessage" />
+                    <EditForm Model="BookInCart" OnValidSubmit="AddToCart" id="form-1" class=" w-75 m-auto d-flex flex-column align-items-center justify-content-center">
+                        <div class="mb-3">
+                            <label for="name1" class="form-label">Number of copies:</label>
+                            <InputNumber @bind-Value="BookInCart.SoldQuantity" class="form-control bg-transparent" id="name2" required minimum="1" />
+                        </div>
+                        <div class="mb-3">
+                            <pre>Price:   @BookInCart.Price</pre>
+                        </div>
+                        <div class="mb-3">
+                            <pre>Shipping:   30 L.E</pre>
+                        </div>
+                        <div class="mb-3">
+                            <pre>Total:   @BookInCart.TotalPrice L.E</pre>
+                        </div>
+                        <button type="submit" class="btn-sm borrow mb-3">Add to cart</button>
+                    </EditForm>
+                }
+
+                @if (isShowBorrowForm)
+                {
+                    BookInCart.BookStatus = BookStatus.Borrowed;
+
+                    <StatusMessage @ref="_StatusMessage" />
+                    <EditForm Model="BookInCart" OnValidSubmit="AddToCart" id="form-2" class=" w-75 m-auto d-flex flex-column align-items-center justify-content-center">
+                        <div class="mb-3">
+                            <label for="name2" class="form-label">Number of days:</label>
+                            <InputNumber @bind-Value="BookInCart.BorrowingPeriod" class="form-control bg-transparent" id="name2" required />
+                        </div>
+                        <div class="mb-3">
+                            <pre>Price:   @BookInCart.TotalPrice L.E</pre>
+                        </div>
+                        <button type="submit" class="btn-sm borrow mb-3">Add to cart</button>
+                    </EditForm>
+
+                }
+            </div>
 
         </div>
     }
 
-    @if (isShowBuyForm)
-    {
-        BookInCart.BookStatus = BookStatus.Buyed;
-
-        <StatusMessage @ref="_StatusMessage" />
-        <EditForm Model="BookInCart" OnValidSubmit="AddToCart" id="form-1">
-            <div class="mb-3">
-                <label for="name1" class="form-label">Number of copies:</label>
-                <InputNumber @bind-Value="BookInCart.SoldQuantity" class="form-control" id="name2" required minimum="1" />
-            </div>
-            <div class="mb-3">
-                <pre>Price:   @BookInCart.Price</pre>
-            </div>
-            <div class="mb-3">
-                <pre>Shipping:   30 L.E</pre>
-            </div>
-            <div class="mb-3">
-                <pre>Total:   @BookInCart.TotalPrice L.E</pre>
-            </div>
-            <button type="submit" class="btn btn-primary btn-1">Add to cart</button>
-        </EditForm>
-    }
-    @if (isShowBorrowForm)
-    {
-        BookInCart.BookStatus = BookStatus.Borrowed;
-
-        <StatusMessage @ref="_StatusMessage" />
-        <EditForm Model="BookInCart" OnValidSubmit="AddToCart" id="form-2">
-            <div class="mb-3">
-                <label for="name2" class="form-label">Number of days:</label>
-                <InputNumber @bind-Value="BookInCart.BorrowingPeriod" class="form-control" id="name2" required />
-            </div>
-            <div class="mb-3">
-                <pre>Price:   @BookInCart.TotalPrice L.E</pre>
-            </div>
-            <button type="submit" class="btn btn-primary btn-1">Add to cart</button>
-        </EditForm>
-    }
     <!-- -Footer Section--->
+
     <footer class="Fot">
         <!--Top-->
         <div class="top-fot">
@@ -130,35 +171,33 @@
         </div>
         <!--Top end-->
         <!--Mid-->
-        <div class="mid-fot">
-            <div class="container content2">
-                <div class="row">
-                    <div class="col-3">
-                        <ul>
-                            <li>
-                                <h5>CONTACT US</h5>
-                            </li>
-                            <li><a href="#">Customer Service</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-3">
-                        <ul>
-                            <li>
-                                <h5>Registeration</h5>
-                            </li>
-                            <li><a href="../registeration/signup.html">Signup</a></li>
-                            <li><a href="../registeration/login.html">Login</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-3">
-                        <ul>
-                            <li>
-                                <h5>about me</h5>
-                            </li>
-                            <li><a href="../profile/profile.html"> profile </a></li>
-                            <li><a href="./Cart">cart</a></li>
-                        </ul>
-                    </div>
+        <div class="mid-fot d-flex justify-content-center">
+            <div class="d-flex justify-content-center pt-4 gap-lg-5 gap-md-5 gap-sm-4 gap-3 flex-column flex-xl-row flex-xxl-row flex-lg-row flex-md-row">
+                <div>
+                    <ul class="ps-0">
+                        <li>
+                            <h5>CONTACT US</h5>
+                        </li>
+                        <li><a href="#">Customer Service</a></li>
+                    </ul>
+                </div>
+                <div class="">
+                    <ul class="ps-0">
+                        <li>
+                            <h5>Registeration</h5>
+                        </li>
+                        <li><a href="../registeration/signup.html">Signup</a></li>
+                        <li><a href="../registeration/login.html">Login</a></li>
+                    </ul>
+                </div>
+                <div class="">
+                    <ul class="ps-0">
+                        <li>
+                            <h5>about me</h5>
+                        </li>
+                        <li><a href="../profile/profile.html"> profile </a></li>
+                        <li><a href="../SW_book_Proj/cart.html">cart</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -174,5 +213,5 @@
     <script src="book.js"></script>
 
 </body>
-</html>
 
+</html>
