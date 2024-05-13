@@ -12,150 +12,166 @@
     <link rel="stylesheet" media="max-width:1000" href="./media-query/media-max-1000px.css">
     <link rel="stylesheet" href="/css/home.css">
 </head>
+<AuthorizeView>
+    <body>
+        <header class="navv d-flex justify-content-between align-items-center pt-3 pb-3">
+            <div class="d-flex gap-2 align-items-center ms-lg-5 ms-md-4 ms-sm-3 ms-2">
+                <a id="logo" class="navbar-brand logo" href="#">
+                    <img src="../Assets/spellbook.png" height="60px" alt="">
+                </a>
+                <div id="marquee">
+                    <marquee scrollamount="5">
+                        <a href="./" class="logo">BookNook</a>
+                    </marquee>
+                </div>
+            </div>
 
-<body>
-    <header class="navv d-flex justify-content-between align-items-center pt-3 pb-3">
-        <div class="d-flex gap-2 align-items-center ms-lg-5 ms-md-4 ms-sm-3 ms-2">
-            <a id="logo" class="navbar-brand logo" href="#">
-                <img src="../Assets/spellbook.png" height="60px" alt="">
-            </a>
-            <div id="marquee">
-                <marquee scrollamount="5">
-                    <a href="home.html" class="logo">BookNook</a>
-                </marquee>
+            <div class="search-container d-flex align-items-center gap-3">
+                <InputText Value="@searchValue" class="search-input" placeholder="Search" ValueChanged="Search" ValueExpression="(() => searchValue)" />
+                <div class="search-icon-not-collapse">
+                    <img src="../Assets/Search-icon.png" alt="search icon" />
+                </div>
+                <ul class="suggestions-list"></ul>
+            </div>
+
+
+            <div class="icons-1" id="navbarNavDropdown">
+                <ul class="text-decoration-none mb-0 d-flex gap-lg-2 gap-md-1 gap-0 list-unstyled align-items-center">
+                    <li>
+                        <div class="search-icon-collapse">
+                            <img src="../Assets/Search-icon.png" alt="search icon" />
+                        </div>
+                    </li>
+
+                    <li>
+                        @if (context.User.IsInRole(ConstSettings.AdminRole))
+                        {
+                            <a href="./AddBook" class="deleteable-icon">
+                                <img src="../Assets/book.png" width="32px" height="32px" class="icon">
+                            </a>
+                        }
+                    </li>
+                    <li>
+                        <a href="./Cart">
+                            <img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./Account/Manage">
+                            <img src="../Assets/profile (1).png" width="32px" height="32px" class="icon">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div class="d-flex me-1 me-xxl-5 me-xl-4 me-lg-3 me-md-2 mt-3 flex-row-reverse">
+            <div class="search-container-collapce d-none align-items-center gap-3 m-auto">
+
+                <InputText Value="@searchValue" class="search-input" placeholder="Search" ValueChanged="Search" ValueExpression="(() => searchValue)" />
+
+                <div class="search-icon-not-collapse">
+                    <img src="../Assets/Search-icon.png" alt="search icon" />
+                </div>
+                <ul class="suggestions-list"></ul>
             </div>
         </div>
+        <h2>Explore your favourite book !</h2>
+        <div class="container text-center cont-1">
+            <div class="d-flex justify-content-around gap-5 flex-wrap">
+                <StatusMessage @ref="_StatusMessage" />
+                @if (AvailableBooks.Count == 0)
+                {
+                    <h2 class="mb-4">No Books Available Right Now !</h2>
+                }
+                @foreach (var book in AvailableBooks)
+                {
 
-        <div class="search-container d-flex align-items-center gap-3">
-            <input type="text" class="search-input" placeholder="Search">
-            <div class="search-icon-not-collapse">
-                <img src="../Assets/Search-icon.png" alt="search icon" />
-            </div>
-            <ul class="suggestions-list"></ul>
-        </div>
-
-        <div class="icons-1" id="navbarNavDropdown">
-            <ul class="text-decoration-none mb-0 d-flex gap-lg-2 gap-md-1 gap-0 list-unstyled align-items-center">
-                <li>
-                    <div class="search-icon-collapse">
-                        <img src="../Assets/Search-icon.png" alt="search icon" />
+                    <div class="image-container">
+                        <img src="@book.Img" class="imgg">
+                        <div class="overlay">
+                            <div class="show">
+                                <h5 class="text-light mb-4">@book.Title</h5>
+                                <button type="button" class="custom-btn btn-1" @onclick="@(()=>NavManager.NavigateTo($"/Preview/{book.Id}"))">Preview</button>
+                                @if (context.User.IsInRole(ConstSettings.AdminRole))
+                                {
+                                    <button type="button" class="custom-btn btn-1 m-3" @onclick="@(()=>DeleteBook(book.Id))">Delete</button>
+                                }
+                            </div>
+                        </div>
                     </div>
-                </li>
-
-                <li>
-                    <a href="./AddBook" class="deleteable-icon">
-                        <img src="../Assets/book.png" width="32px" height="32px" class="icon">
-                    </a>
-                </li>
-                <li>
-                    <a href="./Cart">
-                        <img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon">
-                    </a>
-                </li>
-                <li>
-                    <a href="./Account/Manage">
-                        <img src="../Assets/profile (1).png" width="32px" height="32px" class="icon">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </header>
-    <div class="d-flex me-1 me-xxl-5 me-xl-4 me-lg-3 me-md-2 mt-3 flex-row-reverse">
-        <div class="search-container-collapce d-none align-items-center gap-3 m-auto">
-            <input type="text" class="search-input" placeholder="Search">
-            <div class="search-icon-not-collapse">
-                <img src="../Assets/Search-icon.png" alt="search icon" />
+                }
             </div>
-            <ul class="suggestions-list"></ul>
         </div>
-    </div>
-    <h2>Explore your favourite book !</h2>
-    <div class="container text-center cont-1">
-        <div class="d-flex justify-content-around gap-5 flex-wrap">
+        <div class="rate">
+            <h6>Rate This Product</h6>
+            <div class="rating-container rate">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+            <p id="rating-value">No rating selected</p>
+        </div>
 
-            @foreach (var book in AvailableBooks)
-            {
-
-                <div class="image-container">
-                    <img src="@book.Img" class="imgg">
-                    <div class="overlay">
-                        <div class="show">
-                            <h5 class="text-light mb-4">@book.Title</h5>
-                            <button type="button" class="custom-btn btn-1" @onclick="@(()=>NavManager.NavigateTo($"/Preview/{book.Id}"))">Preview</button>
+        <!-- -Footer Section--->
+        <footer class="Fot">
+            <!--Top-->
+            <div class="top-fot">
+                <div class="container content1">
+                    <div class="row">
+                        <div class="col-11">
+                            <a href="./">BookNook ></a><span>home</span>
                         </div>
                     </div>
                 </div>
-            }
-        </div>
-    </div>
-    <div class="rate">
-        <h6>Rate This Product</h6>
-        <div class="rating-container rate">
-            <span class="star" data-rating="1">★</span>
-            <span class="star" data-rating="2">★</span>
-            <span class="star" data-rating="3">★</span>
-            <span class="star" data-rating="4">★</span>
-            <span class="star" data-rating="5">★</span>
-        </div>
-        <p id="rating-value">No rating selected</p>
-    </div>
-
-    <!-- -Footer Section--->
-    <footer class="Fot">
-        <!--Top-->
-        <div class="top-fot">
-            <div class="container content1">
-                <div class="row">
-                    <div class="col-11">
-                        <a href="../home/home.html">BookNook ></a><span>home</span>
+            </div>
+            <!--Top end-->
+            <!--Mid-->
+            <div class="mid-fot d-flex justify-content-center">
+                <div class="d-flex justify-content-center pt-4 gap-lg-5 gap-md-5 gap-sm-4 gap-3 flex-column flex-xl-row flex-xxl-row flex-lg-row flex-md-row">
+                    <div>
+                        <ul class="ps-0">
+                            <li>
+                                <h5>CONTACT US</h5>
+                            </li>
+                            <li><a href="#">Customer Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="">
+                        <ul class="ps-0">
+                            <li>
+                                <h5>Registeration</h5>
+                            </li>
+                            <li><a href="./Register">Signup</a></li>
+                            <li><a href="./Login">Login</a></li>
+                        </ul>
+                    </div>
+                    <div class="">
+                        <ul class="ps-0">
+                            <li>
+                                <h5>about me</h5>
+                            </li>
+                            <li><a href="./Account/Manage"> profile </a></li>
+                            <li><a href="./Cart">cart</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--Top end-->
-        <!--Mid-->
-        <div class="mid-fot d-flex justify-content-center">
-            <div class="d-flex justify-content-center pt-4 gap-lg-5 gap-md-5 gap-sm-4 gap-3 flex-column flex-xl-row flex-xxl-row flex-lg-row flex-md-row">
-                <div>
-                    <ul class="ps-0">
-                        <li>
-                            <h5>CONTACT US</h5>
-                        </li>
-                        <li><a href="#">Customer Service</a></li>
-                    </ul>
-                </div>
-                <div class="">
-                    <ul class="ps-0">
-                        <li>
-                            <h5>Registeration</h5>
-                        </li>
-                        <li><a href="../registeration/signup.html">Signup</a></li>
-                        <li><a href="../registeration/login.html">Login</a></li>
-                    </ul>
-                </div>
-                <div class="">
-                    <ul class="ps-0">
-                        <li>
-                            <h5>about me</h5>
-                        </li>
-                        <li><a href="../profile/profile.html"> profile </a></li>
-                        <li><a href="../SW_book_Proj/cart.html">cart</a></li>
-                    </ul>
+
+            <!--mid end-->
+            <!--bot-->
+            <div class="fot-bot">
+                <div class="container">
+                    <pre class="my-sig">Copyright @@2024 All rights reserved | This template is made by GPT team </pre>
                 </div>
             </div>
-        </div>
+        </footer>
 
-        <!--mid end-->
-        <!--bot-->
-        <div class="fot-bot">
-            <div class="container">
-                <pre class="my-sig">Copyright @@2024 All rights reserved | This template is made by GPT team </pre>
-            </div>
-        </div>
-    </footer>
+        <script src="home.js"></script>
+    </body>
 
-    <script src="home.js"></script>
-</body>
+</AuthorizeView>
 </html>
 <script>
     const searchInput = document.querySelector('.search-input');

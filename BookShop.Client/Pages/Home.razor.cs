@@ -1,4 +1,6 @@
 using BookShop.Shared.Entities;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using static System.Reflection.Metadata.BlobBuilder;
 namespace BookShop.Client.Pages
 {
@@ -6,8 +8,6 @@ namespace BookShop.Client.Pages
     {
         List<Book> AvailableBooks = new();
         string searchValue = "";
-
-        private StatusMessage statusMessage = new();
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -17,7 +17,12 @@ namespace BookShop.Client.Pages
             }
             await base.OnAfterRenderAsync(firstRender);
         }
-        async Task Search(string Key = nameof(Book.Title))
+        private async Task Search(string value)
+        {
+            searchValue = value;
+            await PerformSearch();
+        }
+        async Task PerformSearch( string Key = nameof(Book.Title))
         {
             var books = await _bookService.Find(Key, searchValue);
             AvailableBooks = books;
@@ -28,12 +33,12 @@ namespace BookShop.Client.Pages
             var response = await _bookService.Delete(bookId);
             if (response.IsSuccessStatusCode)
             {
-                await statusMessage.Info("Book Deleted Successfully");
+                await _StatusMessage.Info("Book Deleted Successfully");
                 AvailableBooks = await _bookService.GetAll();
                 StateHasChanged();
             }
             else
-                await statusMessage.Error("Error while Deleting book");
+                await _StatusMessage.Error("Error while Deleting book");
         }
 
     }
