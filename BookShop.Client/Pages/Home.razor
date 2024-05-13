@@ -1,163 +1,292 @@
-﻿@using BookShop.Client
+﻿@page "/"
 
-@page "/"
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="website icon" type="png" href="../Assets/spellbook.png">
     <title> BookNook </title>
     <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" media="max-width:1000" href="./media-query/media-max-1000px.css">
     <link rel="stylesheet" href="/css/home.css">
 </head>
 
-<AuthorizeView>
-    <NotAuthorized>
-        <Entry />
-    </NotAuthorized>
-    <Authorized>
-        <StatusMessage @ref="statusMessage" />
-        <nav class="navbar navbar-expand-lg navv">
-            <div class="container-fluid">
-                <a id="logo" class="navbar-brand logo" href="#">
-                    <img src="../Assets/spellbook.png" width="70px" height="60px"
-                         alt="">
-                </a>
-                <div id="marquee">
-                    <marquee scrollamount="5"> <a href="#" class="logo">BookNook</a></marquee>
-                </div>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav mr-auto">
-                        <form @onsubmit="@(()=>Search())" class="form-inline my-2 my-lg-0">
-                            <div class="search-container nav-item">
-                                <span class="fas fa-search search-icon"></span>
-                                <InputText @bind-Value="searchValue" class="search-input" placeholder="Search" />
-                                <ul class="suggestions-list"></ul>
-                            </div>
-                        </form>
-                    </ul>
-
-
-                    <ul class="navbar-nav ml-auto">
-                        @if (context.User.IsInRole(ConstSettings.AdminRole))
-                        {
-                            <li class="nav-item">
-                                <a href="./AddBook" class="nav-link"><img src="../Assets/book.png" width="32px" height="32px" class="icon"></a>
-                            </li>
-                        }
-                        <li class="nav-item">
-                            <a href="./Cart" class="nav-link"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./Account/Manage" class="nav-link"><img src="../Assets/profile (1).png" width="32px" height="32px" class="icon"></a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </nav>
-        <h2>Explore your favourite book !</h2>
-        <div class="container cont-1">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center">
-                @foreach (var Book in AvailableBooks)
-                {
-                    <div class="col mb-4">
-                        <div class="image-container">
-                            <img src="@Book.Img" class="imgg im-hov rounded-3">
-                            <div class="overlay">
-                                <div class="show">
-                                    <h5>@Book.Title</h5>
-                                    <button type="button" class="btn btn-1" @onclick="@(()=>NavManager.NavigateTo($"/Preview/{Book.Id}"))">Preview</button>
-                                    <button type="button" class="btn btn-1" @onclick="@(()=>DeleteBook(Book.Id))">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+<body>
+    <header class="navv d-flex justify-content-between align-items-center pt-3 pb-3">
+        <div class="d-flex gap-2 align-items-center ms-lg-5 ms-md-4 ms-sm-3 ms-2">
+            <a id="logo" class="navbar-brand logo" href="#">
+                <img src="../Assets/spellbook.png" height="60px" alt="">
+            </a>
+            <div id="marquee">
+                <marquee scrollamount="5">
+                    <a href="home.html" class="logo">BookNook</a>
+                </marquee>
             </div>
         </div>
 
-
-
-        <div class="rate">
-            <h6>Rate This Product</h6>
-            <div class="rating-container rate">
-                <span class="star" data-rating="1">★</span>
-                <span class="star" data-rating="2">★</span>
-                <span class="star" data-rating="3">★</span>
-                <span class="star" data-rating="4">★</span>
-                <span class="star" data-rating="5">★</span>
+        <div class="search-container d-flex align-items-center gap-3">
+            <input type="text" class="search-input" placeholder="Search">
+            <div class="search-icon-not-collapse">
+                <img src="../Assets/Search-icon.png" alt="search icon" />
             </div>
-            <p id="rating-value">No rating selected</p>
+            <ul class="suggestions-list"></ul>
         </div>
 
-        <!-- -Footer Section--->
-        <footer class="Fot">
-            <!--Top-->
-            <div class="top-fot">
-                <div class="container content1">
-                    <div class="row">
-                        <div class="col-11">
-                            <a href="# ">BookNook ></a><span>home</span>
-                        </div>
+        <div class="icons-1" id="navbarNavDropdown">
+            <ul class="text-decoration-none mb-0 d-flex gap-lg-2 gap-md-1 gap-0 list-unstyled align-items-center">
+                <li>
+                    <div class="search-icon-collapse">
+                        <img src="../Assets/Search-icon.png" alt="search icon" />
+                    </div>
+                </li>
+                <li>
+                    <a href="../borrowed/borow.html">
+                        <img src="../Assets/borrow.png" width="32px" height="32px" class="icon">
+                    </a>
+                </li>
+                <li>
+                    <a href="../admin/add.html" class="deleteable-icon">
+                        <img src="../Assets/book.png" width="32px" height="32px" class="icon">
+                    </a>
+                </li>
+                <li>
+                    <a href="../SW_book_Proj/cart.html">
+                        <img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon">
+                    </a>
+                </li>
+                <li>
+                    <a href="../profile/profile.html">
+                        <img src="../Assets/profile (1).png" width="32px" height="32px" class="icon">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="d-flex me-1 me-xxl-5 me-xl-4 me-lg-3 me-md-2 mt-3 flex-row-reverse">
+        <div class="search-container-collapce d-none align-items-center gap-3 m-auto">
+            <input type="text" class="search-input" placeholder="Search">
+            <div class="search-icon-not-collapse">
+                <img src="../Assets/Search-icon.png" alt="search icon" />
+            </div>
+            <ul class="suggestions-list"></ul>
+        </div>
+    </div>
+    <h2>Explore your favourite book !</h2>
+    <div class="container text-center cont-1">
+        <div class="d-flex justify-content-around gap-5 flex-wrap">
+            <div class="image-container ">
+                <img src="../Assets/oqad.jpg" class="imgg im-hov">
+                <div class="overlay">
+                    <div class="show">
+                        <h5 class="text-light mb-4">عقدك النفسية سجنك الابدى</h5>
+                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
                     </div>
                 </div>
             </div>
-            <!--Top end-->
-            <!--Mid-->
-            <div class="mid-fot">
-                <div class="container content2">
-                    <div class="row">
-                        <div class="col-3">
-                            <ul>
-                                <li>
-                                    <h5>CONTACT US</h5>
-                                </li>
-                                <li><a href="#">Customer Service</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-3">
-                            <ul>
-                                <li>
-                                    <h5>Registeration</h5>
-                                </li>
-                                <li><a href="../registeration/signup.html">Signup</a></li>
-                                <li><a href="../registeration/login.html">Login</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-3">
-                            <ul>
-                                <li>
-                                    <h5>about me</h5>
-                                </li>
-                                <li><a href="../contact/contact.html"> profile </a></li>
-                                <li><a href="../contact/contact.html">cart</a></li>
-                            </ul>
-                        </div>
-                        <!-- <div class="col-3">
-                          <ul class="SOCIAL">
-                            <li>
-                              <h5>NISSAN SOCIAL</h5>
-                            </li><br>
-                            <li><a href=""><i class="fa-brands fa-facebook"></i></a></li>
-                            <li><a href=""><i class="fa-brands fa-twitter"></i></a></li>
-                            <li><a href=""><i class="fa-brands fa-youtube"></i></a></li>
-                            <li><a href=""><i class="fa-brands fa-instagram"></i></a></li>
-                          </ul>
-                        </div> -->
+            <div class="image-container">
+                <img src="../Assets/men-women.jpg" class="imgg">
+                <div class="overlay">
+                    <div class="show">
+                        <h5 class="text-light mb-4">الرجال من المريخ و النساء من الزهرة</h5>
+                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
                     </div>
                 </div>
             </div>
-
-            <!--mid end-->
-            <!--bot-->
-            <div class="fot-bot">
-                <div class="container">
-                    <pre class="my-sig">Copyright @@2024 All rights reserved | This template is made by GPT team </pre>
+            <div class="image-container">
+                <img src="../Assets/ontha.jpg" class="imgg">
+                <div class="overlay">
+                    <div class="show">
+                        <h5 class="text-light mb-4">فى قلبى انثى عبرية</h5>
+                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
+                    </div>
                 </div>
             </div>
-        </footer>
-    </Authorized>
-</AuthorizeView>
+            <div class="image-container">
+                <img src="../Assets/atomic.jfif" class="imgg">
+                <div class="overlay">
+                    <div class="show">
+                        <h5 class="text-light mb-4">العادات الذرية</h5>
+                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="../Assets/cuteness.jfif" class="imgg">
+                <div class="overlay">
+                    <div class="show">
+                        <h5 class="text-light mb-4">لا تكن لطيفا اكثر من اللازم</h5>
+                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="../Assets/rich-dad-poor-dad-book-product.jpg" class="imgg">
+                <div class="overlay">
+                    <div class="show">
+                        <h5 class="text-light mb-4">الاب الغنى و الاب الفقير</h5>
+                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="../Assets/zland.jpg" class="imgg">
+                <div class="overlay">
+                    <div class="show">
+                        <h5 class="text-light mb-4">ارض زيكولا</h5>
+                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="../Assets/miserables-victor-hugo-almarkez-althaqafi.webp" class="imgg">
+                <div class="overlay">
+                    <div class="show">
+                        <h5 class="text-light mb-4">البؤساء</h5>
+                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="../Assets/حياتي-بقربك.jpeg-300x385.jpg" class="imgg">
+                <div class="overlay">
+                    <div class="show">
+                        <h5 class="text-light mb-4">حياتى بقربك</h5>
+                        <a href="../preview/book.HTML"><button type="button" class="custom-btn btn-1">Preview</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rate">
+        <h6>Rate This Product</h6>
+        <div class="rating-container rate">
+            <span class="star" data-rating="1">★</span>
+            <span class="star" data-rating="2">★</span>
+            <span class="star" data-rating="3">★</span>
+            <span class="star" data-rating="4">★</span>
+            <span class="star" data-rating="5">★</span>
+        </div>
+        <p id="rating-value">No rating selected</p>
+    </div>
 
-<script src="home.js"></script>
+    <!-- -Footer Section--->
+    <footer class="Fot">
+        <!--Top-->
+        <div class="top-fot">
+            <div class="container content1">
+                <div class="row">
+                    <div class="col-11">
+                        <a href="../home/home.html">BookNook ></a><span>home</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Top end-->
+        <!--Mid-->
+        <div class="mid-fot d-flex justify-content-center">
+            <div class="d-flex justify-content-center pt-4 gap-lg-5 gap-md-5 gap-sm-4 gap-3 flex-column flex-xl-row flex-xxl-row flex-lg-row flex-md-row">
+                <div>
+                    <ul class="ps-0">
+                        <li>
+                            <h5>CONTACT US</h5>
+                        </li>
+                        <li><a href="#">Customer Service</a></li>
+                    </ul>
+                </div>
+                <div class="">
+                    <ul class="ps-0">
+                        <li>
+                            <h5>Registeration</h5>
+                        </li>
+                        <li><a href="../registeration/signup.html">Signup</a></li>
+                        <li><a href="../registeration/login.html">Login</a></li>
+                    </ul>
+                </div>
+                <div class="">
+                    <ul class="ps-0">
+                        <li>
+                            <h5>about me</h5>
+                        </li>
+                        <li><a href="../profile/profile.html"> profile </a></li>
+                        <li><a href="../SW_book_Proj/cart.html">cart</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
+        <!--mid end-->
+        <!--bot-->
+        <div class="fot-bot">
+            <div class="container">
+                <pre class="my-sig">Copyright @@2024 All rights reserved | This template is made by GPT team </pre>
+            </div>
+        </div>
+    </footer>
+
+    <script src="home.js"></script>
+</body>
+</html>
+<script>
+    const searchInput = document.querySelector('.search-input');
+    const suggestionsList = document.querySelector('.suggestions-list');
+    const searchIconCollapse = document.querySelector(".search-icon-collapse");
+    const searchInputCollapse = document.querySelector(".search-container-collapce");
+
+    const suggestions = [
+        'novels',
+        'self-help',
+        'mystry',
+        'comic books',
+        'romance',
+        'philosophy'
+    ];
+
+    searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredSuggestions = suggestions.filter(suggestion => suggestion.toLowerCase().startsWith(searchTerm));
+
+        suggestionsList.innerHTML = ''; // Clear previous suggestions
+
+        if (filteredSuggestions.length > 0) {
+            filteredSuggestions.forEach(suggestion => {
+                const suggestionItem = document.createElement('li');
+                suggestionItem.textContent = suggestion;
+
+                suggestionItem.addEventListener('click', () => {
+                    searchInput.value = suggestion;
+                    suggestionsList.style.display = 'none'; // Hide suggestions
+                    window.location.href = "../book in category/cat.html";
+                    const h2Element = document.querySelector('h2'); // Assuming you have an h2 element
+                    if (h2Element) {
+                        h2Element.textContent = suggestion;
+                    }
+                });
+
+                suggestionsList.appendChild(suggestionItem);
+            });
+
+            suggestionsList.style.display = 'block'; // Show suggestions
+        } else {
+            suggestionsList.style.display = 'none'; // Hide suggestions
+        }
+    });
+
+    searchIconCollapse.addEventListener('click', () => {
+        searchInputCollapse.classList.toggle("d-none");
+        searchInputCollapse.classList.toggle("d-flex");
+    });
+
+    const stars = document.querySelectorAll('.star');
+    const ratingValue = document.getElementById('rating-value');
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const rating = star.dataset.rating;
+            stars.forEach(star => star.classList.remove('rated'));
+            star.classList.add('rated');
+            ratingValue.textContent = `Rating: ${rating}`;
+        });
+    });
+</script>
