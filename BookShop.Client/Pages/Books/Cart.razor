@@ -40,24 +40,22 @@
 
                     <div class="icons-1" id="navbarNavDropdown">
                         <ul class="text-decoration-none mb-0 d-flex pe-xxl-3 gap-lg-2 gap-md-1 gap-0 list-unstyled align-items-center">
+                            @if (context.User.IsInRole(ConstSettings.AdminRole))
+                            {
+                                <li>
+                                    <a href="./AddBook" class="deleteable-icon">
+                                        <img src="../Assets/book.png" width="32px" height="32px" class="icon">
+                                    </a>
+                                </li>
 
-                            <li>
-                                <a href="../borrowed/borow.html">
-                                    <img src="../Assets/borrow.png" width="32px" height="32px" class="icon">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../admin/add.html" class="deleteable-icon">
-                                    <img src="../Assets/book.png" width="32px" height="32px" class="icon">
-                                </a>
-                            </li>
+                            }
                             <li>
                                 <a href="../SW_book_Proj/cart.html">
                                     <img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon">
                                 </a>
                             </li>
                             <li>
-                                <a href="../profile/profile.html">
+                                <a href="./Account/Manage">
                                     <img src="../Assets/profile (1).png" width="32px" height="32px" class="icon">
                                 </a>
                             </li>
@@ -134,7 +132,7 @@
                         <div class="container content1">
                             <div class="row">
                                 <div class="col-11">
-                                    <a href="../home/home.html">BookNook ></a><span>home</span>
+                                    <a href="./">BookNook ></a><span>home</span>
                                 </div>
                             </div>
                         </div>
@@ -156,8 +154,8 @@
                                     <li>
                                         <h5>Registeration</h5>
                                     </li>
-                                    <li><a href="../registeration/signup.html">Signup</a></li>
-                                    <li><a href="../registeration/login.html">Login</a></li>
+                                    <li><a href="./Account/Register">Signup</a></li>
+                                    <li><a href="./Account/Login">Login</a></li>
                                 </ul>
                             </div>
                             <div class="">
@@ -165,8 +163,8 @@
                                     <li>
                                         <h5>about me</h5>
                                     </li>
-                                    <li><a href="../profile/profile.html"> profile </a></li>
-                                    <li><a href="../SW_book_Proj/cart.html">cart</a></li>
+                                    <li><a href="./Account/Manage"> profile </a></li>
+                                    <li><a href="./Cart">cart</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -185,181 +183,3 @@
     </Authorized>
 </AuthorizeView>
 </html>
-<!DOCTYPE html>
-@* <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="../Assets/spellbook.png">
-    <title>BookNook</title>
-    <link rel="stylesheet" href="../SW_book_Proj/cart.css">
-    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/cart.css">
-
-</head
-<AuthorizeView>
-    <NotAuthorized>
-        <Entry/>
-    </NotAuthorized>
-    <Authorized>
-    @if (isOrderSubmitted)
-            {
-                <SubmitCard SubmittedBooks="BooksInCart" TotalOrderPrice="TotalOrderPrice"/>
-            }
-    else
-    {
-    <body>
-    <nav class="navbar navbar-expand-lg navv">
-        <div class="container-fluid">
-            <a id="logo" class="navbar-brand logo" href="#">
-                <img src="../Assets/spellbook.png" width="70px" height="60px"
-                     alt="">
-            </a>
-            <div id="marquee">
-                <marquee scrollamount="5"> <a href="#" class="logo">BookNook</a></marquee>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="../home/home.html">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="../borrowed/borow.html">Borrowed</a>
-                    </li> -->
-                    <div class="icons-1">
-                    <li>
-                        <a href="../borrowed/borow.html"><img src="../Assets/borrow.png" width="32px" height="32px" class="icon"></a>
-                    </li>
-                    <li>
-                        <a href="../admin/add.html"><img src="../Assets/book.png" width="32px" height="32px" class="icon"></a>
-                    </li>
-                    <!-- <li>
-                      <a href="#"><img src="../Assets/edit.png" width="32px" height="32px" class="icon"></a>
-                    </li> -->
-                    <li>
-                        <a href="cart.html"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
-                    </li>
-                    <li>
-                        <a href="../profile/profile.html"><img src="../Assets/profile (1).png" width="32px" height="32px" class="icon"></a>
-                    </li>
-            </div>
-            </ul>
-        </div>
-        </div>
-    </nav>
-
-
-                 <h1>welcome to cart</h1>
-
-    <div class="container">
-        <StatusMessage @ref="_StatusMessage"/>
-        <div class="container-books">
-            @foreach (var book in BooksInCart)
-            {
-
-                <div class="img-one cont-1 row">
-                    <div class="book-details col-4">
-                        <img src="@book.Img" class="imgg im-hov">
-                    </div>
-
-                    <div class="info-one col-2">
-                        <p>@book.Title</p>
-                        <p></p><p></p><p></p><p></p>
-                        <button class="btn btn-danger" @onclick="()=>DeleteBook(book)">Delete</button>
-                    </div>
-                    <div class="info-two col-2">
-                        @if (book.BookStatus == BookStatus.Buyed)
-                        {
-                            <p>@Enum.GetName(book.BookStatus)</p>
-                            <p>Book price: @book.Price</p>
-                            <p>Number of copies: @book.SoldQuantity</p>
-                            <p>Shipping: 30 L.E</p>
-                            <p>Total: @book.TotalPrice L.E</p>
-                        }
-                        else
-                        {
-                            <p>@Enum.GetName(book.BookStatus)</p>
-                            <p>Borrowing price: @book.BorrowingPrice</p>
-                            <p>Number of copies: @book.BorrowingPeriod</p>
-                            <p>Total: @book.TotalPrice L.E</p>
-                        }
-                    </div>
-                </div>
-            }
-             <div class="row">
-            <div class="col-md-12 text-center">
-                <p class="font-weight-bold">Total Order Price: @CalculateTotalPrice() L.E</p>
-            </div>
-        </div>
-
-        <!-- Add Button to Submit Order -->
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <button class="btn btn-primary" @onclick="()=>SubmitOrder()">Submit Order</button>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <!-- -Footer Section--->
-    <footer class="Fot mt-3">
-        <!--Top-->
-        <div class="top-fot">
-            <div class="container content1">
-                <div class="row">
-                    <div class="col-11">
-                        <a href="../home/home.html">BookNook ></a><span>home</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Top end-->
-        <!--Mid-->
-        <div class="mid-fot">
-            <div class="container content2">
-                <div class="row">
-                    <div class="col-3">
-                        <ul>
-                            <li>
-                                <h5>CONTACT US</h5>
-                            </li>
-                            <li><a href="#">Customer Service</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-3">
-                        <ul>
-                            <li>
-                                <h5>Registeration</h5>
-                            </li>
-                            <li><a href="../registeration/signup.html">Signup</a></li>
-                            <li><a href="../registeration/login.html">Login</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-3">
-                        <ul>
-                            <li>
-                                <h5>about me</h5>
-                            </li>
-                            <li><a href="../profile/profile.html"> profile </a></li>
-                            <li><a href="../SW_book_Proj/cart.html">cart</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--mid end-->
-        <!--bot-->
-        <div class="fot-bot">
-            <div class="container">
-                <pre class="my-sig">Copyright @@2024 All rights reserved | This template is made by GPT team </pre>
-            </div>
-        </div>
-    </footer>
-</body>
-            }
-    </Authorized>
-</AuthorizeView>
-</html> *@
-

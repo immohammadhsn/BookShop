@@ -2,80 +2,87 @@
 
 @page "/Account/Manage"
 @using System.Security.Claims
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="website icon" type="png" href="../Assets/spellbook.png">
+    <title> BookNook </title>
+    <link rel="stylesheet" href="css/Bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="/profile.css">
+</head>
 <AuthorizeView>
     <NotAuthorized>
         <Entry />
     </NotAuthorized>
     <Authorized>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="website icon" type="png" href="../Assets/spellbook.png">
-            <title> BookNook </title>
-            <link rel="stylesheet" href="/css/BookPreview.css">
-            <link rel="stylesheet" href="/css/profile.css">
-        </head>
         <body>
-            <nav class="navbar navbar-expand-lg navv">
-                <div class="container-fluid">
+            <header class="navv d-flex justify-content-between align-items-center pt-3 pb-3">
+                <div class="d-flex gap-2 align-items-center ms-lg-5 ms-md-4 ms-sm-3 ms-2">
                     <a id="logo" class="navbar-brand logo" href="#">
-                        <img src="../Assets/spellbook.png" width="70px" height="60px"
-                             alt="">
+                        <img src="../Assets/spellbook.png" height="60px" alt="">
                     </a>
                     <div id="marquee">
-                        <marquee scrollamount="5"> <a href="#" class="logo">BookNook</a></marquee>
+                        <marquee scrollamount="5">
+                            <a href="./" class="logo">BookNook</a>
+                        </marquee>
                     </div>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
-                            <div class="icons-1">
+                </div>
+
+                <div class="icons-1" id="navbarNavDropdown">
+                    <ul class="text-decoration-none mb-0 d-flex gap-lg-2 gap-md-1 gap-0 list-unstyled align-items-center">
+                        @if (context.User.IsInRole(ConstSettings.AdminRole))
+                        {
                             <li>
-                                <a href="./MonthlyReport"><img src="../Assets/report.png" width="32px" height="32px" class="icon"></a>
+                                <a href="./MonthlyReport">
+                                    <img src="../Assets/report.png" width="32px" height="32px" class="icon">
+                                </a>
                             </li>
                             <li>
-                                <a href="./AddBook"><img src="../Assets/book.png" width="32px" height="32px" class="icon"></a>
+                                <a href="./AbbBook" class="deleteable-icon">
+                                    <img src="../Assets/book.png" width="32px" height="32px" class="icon">
+                                </a>
                             </li>
-                            <li>
-                                <a href="./Cart"><img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon"></a>
-                            </li>
-                            <li>
-                                <a href="./Account/Manage"><img src="../Assets/profile (1).png" width="32px" height="32px" class="icon"></a>
-                            </li>
-                    </div>
+                        }
+
+
+                        <li>
+                            <a href="./Cart">
+                                <img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./Account/Manage">
+                                <img src="../Assets/profile (1).png" width="32px" height="32px" class="icon">
+                            </a>
+                        </li>
                     </ul>
                 </div>
+            </header>
+            <div class="content d-flex m-auto flex-column w-25 mb-5 align-items-center gap-3">
+
+                <div class="profile rounded-circle overflow-hidden">
+                    <img src="../Assets/profile (1).png" alt="Profile Picture">
                 </div>
-            </nav>
-            <br>
-            <br>
-            <div class="profile">
-                <img src="../Assets/profile (1).png" alt="Profile Picture">
+
+                <p for="name">Name: @context.User.FindFirstValue(ClaimTypes.Name)</p>
+                <p for="phone">
+                    Phone: <tel>@(context.User.FindFirstValue(ClaimTypes.MobilePhone) ?? "01091006987")</tel>
+                </p>
+                <p for="email">Email: @context.User.FindFirstValue(ClaimTypes.Email)</p>
+
+                <div>
+                    <a href="./">
+                        <button @onclick="@(()=>{AccountService.LogOut(); NavManager.NavigateTo("/Account/Login"); })">LogOut</button>
+                    </a>
+                </div>
+
             </div>
-            <div class="content">
-            </div>
-            <br>
-            <br>
-            <center>
-
-                <label for="name">Name:@context.User.FindFirst(ClaimTypes.Name)?.Value</label>
-
-            </center>
-            <br>
-            <br>
-            <center> <label for="phone">Phone: @context.User.FindFirst(ClaimTypes.MobilePhone)?.Value.ToString()</label></center>
-            <br>
-            <br>
-            <center>
-                <label for="email">Email: @context.User.FindFirst(ClaimTypes.Email)?.Value</label>
-            </center>
-            <br>
-            <center>
-                <button @onclick="@(()=>{AccountService.LogOut(); NavManager.NavigateTo("/Account/Login"); })">LogOut</button>
-            </center>
-            <br>
-            <br>
-
-
             <!-- -Footer Section--->
             <footer class="Fot">
                 <!--Top-->
@@ -83,7 +90,7 @@
                     <div class="container content1">
                         <div class="row">
                             <div class="col-11">
-                                <a href="./Home">BookNook ></a><span>home</span>
+                                <a href="./">BookNook ></a><span>home</span>
                             </div>
                         </div>
                     </div>
@@ -106,8 +113,8 @@
                                     <li>
                                         <h5>Registeration</h5>
                                     </li>
-                                    <li><a href=".Account/Register">Signup</a></li>
-                                    <li><a href=".Account/Login">Login</a></li>
+                                    <li><a href="./Account/Register">Signup</a></li>
+                                    <li><a href="./Account/Login">Login</a></li>
                                 </ul>
                             </div>
                             <div class="col-3">
@@ -132,9 +139,7 @@
                 </div>
             </footer>
 
-            <script src="read page.css"></script>
         </body>
-    </html>
-</Authorized>
+    </Authorized>
 </AuthorizeView>
-<!DOCTYPE html>
+</html>
