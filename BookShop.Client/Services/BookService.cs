@@ -24,8 +24,8 @@ namespace BookShop.Client.Services
 
             if (book is null) return new() { StatusCode = System.Net.HttpStatusCode.NotFound };
 
-            if (book.AvailableQuantity >= (soldBook.SoldQuantity + soldBook.BorrowedQuantity))
-                book.AvailableQuantity -= (soldBook.SoldQuantity + soldBook.BorrowedQuantity);
+            if (book.AvailableQuantity >= soldBook.SoldQuantity)
+                book.AvailableQuantity -= soldBook.SoldQuantity;
             else
                 return new() { StatusCode = System.Net.HttpStatusCode.BadRequest };
 

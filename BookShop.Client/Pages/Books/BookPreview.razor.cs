@@ -56,17 +56,11 @@ public partial class BookPreview
         }
         else if (isShowBorrowForm)
         {
-            if (BookInCart?.AvailableQuantity >= BookInCart.BorrowedQuantity + 5)
-            {
 
-                BookInCart.BookStatus = BookStatus.Borrowed;
-                await SaveIntoLocal(BookInCart);
+            BookInCart.BookStatus = BookStatus.Borrowed;
+            await SaveIntoLocal(BookInCart);
 
-                NavManager.NavigateTo("/Cart");
-            }
-
-            else
-                await _StatusMessage.Warning($"Only {BookInCart.AvailableQuantity-5} copies available to borrow");
+            NavManager.NavigateTo("/Cart");
         }
     }
 
@@ -90,9 +84,9 @@ public class BookInCart : Book
 {
     public BookStatus BookStatus { get; set; }
     public int BorrowingPeriod { get; set; }
-    public double BorrowingPrice { get { return Price*0.25; } set { } }
+    public double BorrowingPrice { get { return Price * 0.25; } set { } }
     public int BorrowedQuantity { get; set; } = 0;
     public int SoldQuantity { get; set; }
-    public double TotalPrice {get => BookStatus.Equals(BookStatus.Buyed) ? (Price * SoldQuantity) + 30 : (BorrowingPrice +BorrowingPeriod * 0.25); set { } }
+    public double TotalPrice { get => BookStatus.Equals(BookStatus.Buyed) ? (Price * SoldQuantity) + 30 : (BorrowedQuantity + Price * 0.25); set { } }
 }
 
