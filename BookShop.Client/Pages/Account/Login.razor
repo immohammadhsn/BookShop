@@ -3,29 +3,31 @@
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Identity
 @namespace BookShop.Client
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="website icon" type="png" href="/Assets/spellbook.png">
+    <link rel="website icon" type="png" href="../Assets/spellbook.png">
     <title>login</title>
-    <link rel="stylesheet" href="/css/Login.css" />
-    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-
 <AuthorizeView>
     <Authorized>
         @if (context.User.Identity.IsAuthenticated)
         {
-            NavManager.NavigateTo("/");
+            NavManager.NavigateTo("/", false);
         }
     </Authorized>
     <NotAuthorized>
         <body>
-            <div class="row cont-1">
-                <div class="col-6 left-1">
+            <div class="main-container d-flex flex-column-reverse flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row w-100">
+                <div class="left-1 d-flex justify-content-center p-3 align-items-center p-0 w-100">
                     <div class="wrapper">
                         <StatusMessage @ref="_LoginMessage" />
                         <EditForm Model="LoggedUser" method="post" OnValidSubmit="LoginUser" FormName="login">
@@ -54,14 +56,16 @@
 
                 </div>
 
-                <div class="col-6 right-2">
-                    <div>
-                        <div class="cont-3">
-                            <img src="/Assets/spellbook.png" alt="icon" class="ic-1">
-                            <p class="p1">BookNook </p>
-                        </div>
+                <div class=" p-0 right-2 d-flex justify-content-center align-items-center position-relative">
+                    <div class="cont-3 position-absolute top-0 end-0">
+                        <img src="../Assets/spellbook.png" alt="icon" class="ic-1">
+                        <p class="p1">BookNook </p>
+                    </div>
+                    <div class="d-flex flex-column gap-2 align-items-center">
                         <h1>login</h1>
-                        <a href="./Account/Register"><div class="btn-2">sign up</div></a>
+                        <a href="./Account/Register">
+                            <div class="btn-2">sign up</div>
+                        </a>
                         <span>Don't have an account?</span>
                     </div>
                 </div>

@@ -16,7 +16,6 @@ public class Book
 
     public int pagesNumber { get; set; }
     public int AvailableQuantity { get; set; }
-    public int BorrowedQuantity { get; set; }
 
     public double Price { get; set; }
     public double Discount { get; set; }

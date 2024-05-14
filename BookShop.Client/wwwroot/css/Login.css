@@ -1,5 +1,6 @@
-﻿body {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../Assets/view-books-arrangement.jpg);
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+        url(../Assets/view-books-arrangement.jpg);
 }
 
 a {
@@ -9,14 +10,88 @@ a {
 
 .cont-3 {
     display: flex;
-    margin-left: 600px;
+    justify-content: end;
     margin-top: 10px;
+}
+
+.main-container {
+    min-height: 100vh;
 }
 
 .right-2 {
     background-color: #D9AC82;
     border-radius: 200px 0 0 0;
-    height: 765px;
+    width: 35%;
+}
+
+.left-1 {
+    width: 65%;
+}
+
+@media (max-width:580px) {
+
+    .right-2 {
+        width: 100%;
+        min-height: 200px;
+        display: none !important;
+    }
+
+    .left-1 {
+        width: 100% !important;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .main-container {
+        min-height: 0px;
+    }
+
+    .wrapper {
+        width: 80% !important;
+    }
+}
+
+@media (max-width:580px) {
+    .wrapper {
+        width: 90% !important;
+    }
+}
+
+@media (max-width:380px) {
+    .wrapper {
+        width: 100% !important;
+    }
+}
+
+
+
+@media (max-width:1300px) {
+
+    .left-1 .wrapper {
+        width: 60%;
+    }
+}
+
+@media (max-width:1140px) {
+
+    .left-1 .wrapper {
+        width: 70%;
+    }
+}
+
+@media (max-width:980px) {
+
+    .left-1 .wrapper {
+        width: 85%;
+    }
+}
+
+@media (max-width:980px) {
+
+    .left-1 .wrapper {
+        width: 98%;
+    }
 }
 
 .ic-1 {
@@ -30,11 +105,6 @@ a {
     font-weight: 600;
 }
 
-h1 {
-    margin-top: 200px;
-    margin-left: 400px;
-}
-
 .btn-2 {
     border: 1px solid #541400;
     width: 200px;
@@ -43,21 +113,15 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 345px;
-    margin-top: 30px;
 }
 
-    .btn-2:hover {
-        color: white;
-        background-color: #541400;
-    }
-
-span {
-    margin-left: 365px;
+.btn-2:hover {
+    color: white;
+    background-color: #541400;
 }
 
 .wrapper {
-    width: 420px;
+    width: 50%;
     background: transparent;
     border: 2px sold rgba(255, 255, 255, .2);
     backdrop-filter: blur(20px);
@@ -65,16 +129,17 @@ span {
     color: #fff;
     border-radius: 10px;
     padding: 30px 40px;
-    margin-top: 230px;
-    margin-left: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-    .wrapper .input-box {
-        position: relative;
-        width: 100%;
-        height: 50px;
-        margin: 30px 0;
-    }
+.wrapper .input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
 
 .input-box input {
     width: 100%;
@@ -89,9 +154,9 @@ span {
     padding: 20px 45px 20px 20px;
 }
 
-    .input-box input::placeholder {
-        color: #fff;
-    }
+.input-box input::placeholder {
+    color: #fff;
+}
 
 .input-box i {
     position: absolute;
@@ -149,6 +214,6 @@ span {
     font-weight: 600;
 }
 
-    .Signup p a:hover {
-        text-decoration: underline;
-    }
+.Signup p a:hover {
+    text-decoration: underline;
+}

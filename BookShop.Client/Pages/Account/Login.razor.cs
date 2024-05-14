@@ -30,7 +30,7 @@ namespace BookShop.Client
             {
                 StateHasChanged();
 
-                NavManager.NavigateTo("/", true);
+                NavManager.NavigateTo("/", false);
             }
         }
     }

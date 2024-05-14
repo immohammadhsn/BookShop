@@ -62,7 +62,7 @@
             </center>
             <br>
             <br>
-            <center> <label for="phone">Phone: <tel>@context.User.FindFirst(ClaimTypes.MobilePhone)?.Value</tel></label></center>
+            <center> <label for="phone">Phone: @context.User.FindFirst(ClaimTypes.MobilePhone)?.Value.ToString()</label></center>
             <br>
             <br>
             <center>

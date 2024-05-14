@@ -50,6 +50,7 @@ public partial class Cart
             response = await _bookService.AddSoldBook(book);
             if (!response.IsSuccessStatusCode)
                 break;
+            
         }
         if (response.IsSuccessStatusCode)
         {
@@ -58,7 +59,11 @@ public partial class Cart
             await localStorage.RemoveItemAsync(ConstSettings.LocalStoredBooks);
         }
         else
+        {
+            if (response.StatusCode==System.Net.HttpStatusCode.BadRequest) { await _StatusMessage.Error("No enough books in inventory"); return; }
+
             await _StatusMessage.Error("Somthing went wrong while submitting the order");
+        }
     }
 
 

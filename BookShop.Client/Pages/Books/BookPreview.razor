@@ -130,6 +130,9 @@
                         <div class="mb-3">
                             <pre>Total:   @BookInCart.TotalPrice L.E</pre>
                         </div>
+                        <div class="mb-3">
+                            <pre>Available Copies:   @BookInCart.AvailableQuantity</pre>
+                        </div>
                         <button type="submit" class="btn-sm borrow mb-3">Add to cart</button>
                     </EditForm>
                 }
@@ -142,7 +145,7 @@
                     <EditForm Model="BookInCart" OnValidSubmit="AddToCart" id="form-2" class=" w-75 m-auto d-flex flex-column align-items-center justify-content-center">
                         <div class="mb-3">
                             <label for="name2" class="form-label">Number of days:</label>
-                            <InputNumber @bind-Value="BookInCart.BorrowingPeriod" class="form-control bg-transparent" id="name2" required />
+                            <InputNumber @bind-Value="BookInCart.BorrowedQuantity" class="form-control bg-transparent" id="name2" required />
                         </div>
                         <div class="mb-3">
                             <pre>Price:   @BookInCart.TotalPrice L.E</pre>
