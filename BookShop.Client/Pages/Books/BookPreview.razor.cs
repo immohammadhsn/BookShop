@@ -83,10 +83,9 @@ public partial class BookPreview
 public class BookInCart : Book
 {
     public BookStatus BookStatus { get; set; }
-    public int BorrowingPeriod { get; set; }
     public double BorrowingPrice { get { return Price * 0.25; } set { } }
-    public int BorrowedQuantity { get; set; } = 0;
+    public int BorrowedPeriod { get; set; } = 0;
     public int SoldQuantity { get; set; }
-    public double TotalPrice { get => BookStatus.Equals(BookStatus.Buyed) ? (Price * SoldQuantity) + 30 : (BorrowedQuantity + Price * 0.25); set { } }
+    public double TotalPrice { get => BookStatus.Equals(BookStatus.Buyed) ? (Price * SoldQuantity) + 30 : (BorrowedPeriod + Price * 0.25); set { } }
 }
 

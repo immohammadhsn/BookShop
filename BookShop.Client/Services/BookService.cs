@@ -33,7 +33,7 @@ namespace BookShop.Client.Services
 
             if (response.IsSuccessStatusCode)
             {
-                SoldBookDTO sold = new() { BookId = soldBook.Id, BookStatus = soldBook.BookStatus, Date = DateTime.Now, Quantity = soldBook.SoldQuantity + soldBook.BorrowedQuantity, Profit = soldBook.TotalPrice };
+                SoldBookDTO sold = new() { BookId = soldBook.Id, BookStatus = soldBook.BookStatus, Date = DateTime.Now, Quantity = soldBook.SoldQuantity + soldBook.BorrowedPeriod, Profit = soldBook.TotalPrice };
                 response = await _httpClient.PostAsJsonAsync("/api/SoldBook", sold);
             }
 

@@ -18,7 +18,6 @@ public class Book
     public int AvailableQuantity { get; set; }
 
     public double Price { get; set; }
-    public double Discount { get; set; }
 
     [NotMapped]
     public double PriceAfterDiscount { get; set; }

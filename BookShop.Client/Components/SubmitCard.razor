@@ -38,7 +38,7 @@
                @book.Title
             </td>
             <td>
-                   @(quantity=book.BookStatus==BookStatus.Buyed?book.SoldQuantity:book.BorrowingPeriod)
+                   @(quantity=book.BookStatus==BookStatus.Buyed?book.SoldQuantity:book.BorrowedPeriod)
                 </td>
             <td>
                 @DateTime.Now.Date
