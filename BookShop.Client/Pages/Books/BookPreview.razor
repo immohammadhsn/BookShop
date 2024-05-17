@@ -24,7 +24,7 @@
             </a>
             <div id="marquee">
                 <marquee scrollamount="5">
-                    <a href="home.html" class="logo">BookNook</a>
+                    <a href="./" class="logo">BookNook</a>
                 </marquee>
             </div>
         </div>
@@ -116,7 +116,7 @@
             <div id="form-container" class="m-auto ">
                 @if (isShowBuyForm)
                 {
-                    BookInCart.BookStatus = BookStatus.Buyed;
+                    BookInCart.BookStatus = BookStatus.Bought;
 
                     <StatusMessage @ref="_StatusMessage" />
                     <EditForm Model="BookInCart" OnValidSubmit="AddToCart" id="form-1" class=" w-75 m-auto d-flex flex-column align-items-center justify-content-center">
@@ -168,7 +168,7 @@
             <div class="container content1">
                 <div class="row">
                     <div class="col-11">
-                        <a href="../home/home.html">BookNook ></a><span>home</span>
+                        <a href="./">BookNook ></a><span>home</span>
                     </div>
                 </div>
             </div>
@@ -190,8 +190,8 @@
                         <li>
                             <h5>Registeration</h5>
                         </li>
-                        <li><a href="../registeration/signup.html">Signup</a></li>
-                        <li><a href="../registeration/login.html">Login</a></li>
+                        <li><a href="./Account/Register">Signup</a></li>
+                        <li><a href="./Account/Login">Login</a></li>
                     </ul>
                 </div>
                 <div class="">
@@ -199,8 +199,8 @@
                         <li>
                             <h5>about me</h5>
                         </li>
-                        <li><a href="../profile/profile.html"> profile </a></li>
-                        <li><a href="../SW_book_Proj/cart.html">cart</a></li>
+                        <li><a href="./Account/Manage"> profile </a></li>
+                        <li><a href="./Cart">cart</a></li>
                     </ul>
                 </div>
             </div>

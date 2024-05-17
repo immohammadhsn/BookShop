@@ -50,7 +50,7 @@
 
                             }
                             <li>
-                                <a href="../SW_book_Proj/cart.html">
+                                <a href="./Cart">
                                     <img src="../Assets/shopping-cart (1).png" width="32px" height="32px" class="icon">
                                 </a>
                             </li>
@@ -84,9 +84,9 @@
                                     </div>
                                 </div>
                                 <div class="info-two d-flex justify-content-center align-items-center flex-column">
-                                    @if (bookInCart.BookStatus == BookStatus.Buyed)
+                                    @if (bookInCart.BookStatus == BookStatus.Bought)
                                     {
-                                        <p>@Enum.GetName(bookInCart.BookStatus)</p>
+                                        <p>Book status: @Enum.GetName(bookInCart.BookStatus)</p>
                                         <p>Book price: @bookInCart.Price</p>
                                         <p>Number of copies: @bookInCart.SoldQuantity</p>
                                         <p>Shipping: 30 L.E</p>
@@ -94,9 +94,9 @@
                                     }
                                     else
                                     {
-                                        <p>@Enum.GetName(bookInCart.BookStatus)</p>
+                                        <p>Book status: @Enum.GetName(bookInCart.BookStatus)</p>
                                         <p>Borrowing price: @bookInCart.BorrowingPrice</p>
-                                        <p>Number of copies: @bookInCart.BorrowedPeriod</p>
+                                        <p>Number of days: @bookInCart.BorrowedPeriod</p>
                                         <p>Total: @bookInCart.TotalPrice L.E</p>
                                     }
                                 </div>
@@ -111,9 +111,20 @@
                         </div>
                         <!-- Add Button to Submit Order -->
                         <div class="row">
-                            <div class="col-md-12 text-center">
-                                <button class="btn btn-primary" @onclick="()=>SubmitOrder()">Submit Order</button>
+                            <div class="col-12 d-flex justify-content-center align-items-center flex-column text-center">
+                                <EditForm Model="new()" OnValidSubmit="SubmitOrder" Context="con">
+                                    <div class="input-box mb-1">
+                                        <select class="form-control bg-transparent" required>
+                                            <option value="">Select payment method</option>
+
+                                            <option value="cash">Cash on delivery</option>
+                                        </select>
+                                    </div>
+                                    <textarea placeholder="Address" class="form-control bg-transparent mb-2" required></textarea>
+                                    <button type="submit" class="btn btn-primary">Submit Order</button>
+                                </EditForm>
                             </div>
+
                         </div>
                     }
                     else

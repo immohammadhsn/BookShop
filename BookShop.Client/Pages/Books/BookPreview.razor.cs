@@ -44,7 +44,7 @@ public partial class BookPreview
         {
             if (BookInCart?.AvailableQuantity >= BookInCart.SoldQuantity)
             {
-                BookInCart.BookStatus = BookStatus.Buyed;
+                BookInCart.BookStatus = BookStatus.Bought;
                 await SaveIntoLocal(BookInCart);
 
                 NavManager.NavigateTo("/Cart");
@@ -84,8 +84,8 @@ public class BookInCart : Book
 {
     public BookStatus BookStatus { get; set; }
     public double BorrowingPrice { get { return Price * 0.25; } set { } }
-    public int BorrowedPeriod { get; set; } = 0;
-    public int SoldQuantity { get; set; }
-    public double TotalPrice { get => BookStatus.Equals(BookStatus.Buyed) ? (Price * SoldQuantity) + 30 : (BorrowedPeriod + Price * 0.25); set { } }
+    public int BorrowedPeriod { get; set; } = 1;
+    public int SoldQuantity { get; set; } = 1;
+    public double TotalPrice { get => BookStatus.Equals(BookStatus.Bought) ? (Price * SoldQuantity) + 30 : (BorrowedPeriod + Price * 0.25); set { } }
 }
 

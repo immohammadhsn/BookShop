@@ -29,6 +29,7 @@ namespace BookShop.Client.Services
             else
                 return new() { StatusCode = System.Net.HttpStatusCode.BadRequest };
 
+
             var response = await Edit(soldBook.Id, book);
 
             if (response.IsSuccessStatusCode)

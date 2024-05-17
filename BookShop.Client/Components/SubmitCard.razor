@@ -33,30 +33,39 @@
         </tr>
         @foreach (var book in SubmittedBooks)
         {
-        <tr>
-            <td>
-               @book.Title
-            </td>
-            <td>
-                   @(quantity=book.BookStatus==BookStatus.Buyed?book.SoldQuantity:book.BorrowedPeriod)
+            if (book.BookStatus == BookStatus.Borrowed)
+            {
+                quantity = book.BorrowedPeriod.ToString();
+                quantity = quantity.ToString() + " /Day";
+            }
+            else
+            {
+                quantity = book.SoldQuantity.ToString();
+            }
+            <tr>
+                <td>
+                    @book.Title
                 </td>
-            <td>
-                @DateTime.Now.Date
-            </td>
-            <td>
-                @book.BookStatus
-            </td>
-            <td>
-                @book.TotalPrice
-            </td>
-        </tr>
+                <td>
+                    @quantity
+                </td>
+                <td>
+                    @DateTime.Now.Date.ToShortDateString()
+                </td>
+                <td>
+                    @book.BookStatus
+                </td>
+                <td>
+                    @book.TotalPrice
+                </td>
+            </tr>
         }
         <tr>
             <td colspan="4">
                 Total Price:
             </td>
             <td>
-               @TotalOrderPrice L.E
+                @TotalOrderPrice L.E
             </td>
         </tr>
     </table>
@@ -67,5 +76,5 @@
 {
     [Parameter] public List<BookInCart> SubmittedBooks { get; set; }
     [Parameter] public double TotalOrderPrice { get; set; }
-    private int quantity = 0;
+    private string quantity;
 }

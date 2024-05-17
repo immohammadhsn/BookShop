@@ -106,17 +106,6 @@
                     }
                 </div>
             </div>
-            <div class="rate">
-                <h6>Rate This Product</h6>
-                <div class="rating-container rate">
-                    <span class="star" data-rating="1">★</span>
-                    <span class="star" data-rating="2">★</span>
-                    <span class="star" data-rating="3">★</span>
-                    <span class="star" data-rating="4">★</span>
-                    <span class="star" data-rating="5">★</span>
-                </div>
-                <p id="rating-value">No rating selected</p>
-            </div>
 
             <!-- -Footer Section--->
             <footer class="Fot">
@@ -147,8 +136,8 @@
                                 <li>
                                     <h5>Registeration</h5>
                                 </li>
-                                <li><a href="./Register">Signup</a></li>
-                                <li><a href="./Login">Login</a></li>
+                                <li><a href="./Account/Register">Signup</a></li>
+                                <li><a href="./Account/Login">Login</a></li>
                             </ul>
                         </div>
                         <div class="">
@@ -177,65 +166,3 @@
     </Authorized>
 </AuthorizeView>
 </html>
-<script>
-    const searchInput = document.querySelector('.search-input');
-    const suggestionsList = document.querySelector('.suggestions-list');
-    const searchIconCollapse = document.querySelector(".search-icon-collapse");
-    const searchInputCollapse = document.querySelector(".search-container-collapce");
-
-    const suggestions = [
-        'novels',
-        'self-help',
-        'mystry',
-        'comic books',
-        'romance',
-        'philosophy'
-    ];
-
-    searchInput.addEventListener('input', () => {
-        const searchTerm = searchInput.value.toLowerCase();
-        const filteredSuggestions = suggestions.filter(suggestion => suggestion.toLowerCase().startsWith(searchTerm));
-
-        suggestionsList.innerHTML = ''; // Clear previous suggestions
-
-        if (filteredSuggestions.length > 0) {
-            filteredSuggestions.forEach(suggestion => {
-                const suggestionItem = document.createElement('li');
-                suggestionItem.textContent = suggestion;
-
-                suggestionItem.addEventListener('click', () => {
-                    searchInput.value = suggestion;
-                    suggestionsList.style.display = 'none'; // Hide suggestions
-                    window.location.href = "../book in category/cat.html";
-                    const h2Element = document.querySelector('h2'); // Assuming you have an h2 element
-                    if (h2Element) {
-                        h2Element.textContent = suggestion;
-                    }
-                });
-
-                suggestionsList.appendChild(suggestionItem);
-            });
-
-            suggestionsList.style.display = 'block'; // Show suggestions
-        } else {
-            suggestionsList.style.display = 'none'; // Hide suggestions
-        }
-    });
-
-    searchIconCollapse.addEventListener('click', () => {
-        searchInputCollapse.classList.toggle("d-none");
-        searchInputCollapse.classList.toggle("d-flex");
-    });
-
-    const stars = document.querySelectorAll('.star');
-    const ratingValue = document.getElementById('rating-value');
-
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            const rating = star.dataset.rating;
-            stars.forEach(star => star.classList.remove('rated'));
-            star.classList.add('rated');
-            ratingValue.textContent = `Rating: ${rating}`;
-        });
-    });
-</script>

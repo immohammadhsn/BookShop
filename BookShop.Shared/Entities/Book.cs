@@ -42,4 +42,4 @@ public class BookDTO
     [NotMapped]
     public double PriceAfterDiscount { get; set; }
 }
-public enum BookStatus { Borrowed, Buyed }
+public enum BookStatus { Borrowed, Bought }
