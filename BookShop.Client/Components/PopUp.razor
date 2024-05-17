@@ -1,0 +1,44 @@
+﻿@code {
+    [Parameter] public string Title { get; set; } = "Modal title";
+    [Parameter] public string Body { get; set; } = "Modal body text goes here.";
+    [Parameter] public string PrimaryButtonText { get; set; } = "Save changes";
+    [Parameter] public string SecondaryButtonText { get; set; } = "Close";
+    [Parameter] public EventCallback PrimaryButtonClicked { get; set; }
+    [Parameter] public EventCallback SecondaryButtonClicked { get; set; }
+
+    private bool isModalVisible = true;
+
+    public void Hide() => isModalVisible = false;
+
+    private async Task OnPrimaryButtonClick()
+    {
+        Hide();
+        if (PrimaryButtonClicked.HasDelegate)
+        {
+            await PrimaryButtonClicked.InvokeAsync();
+        }
+    }
+    
+}
+
+@if (isModalVisible)
+{
+    <div class="modal d-block" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@Title</h5>
+                    <button type="button" class="close" @onclick="Hide" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@Body</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" @onclick="OnPrimaryButtonClick">@PrimaryButtonText</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
