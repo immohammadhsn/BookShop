@@ -1,0 +1,6 @@
+![Screenshot 2024-06-05 160720](https://github.com/vodkagamed/BookShop/assets/89106400/4754b41b-8dc4-4bce-97ee-0238c891e35e)
+![Screenshot 2024-06-05 160732](https://github.com/vodkagamed/BookShop/assets/89106400/8f5fa0f1-9f11-4495-b63f-e5fe8e05cf02)
+![Screenshot 2024-06-05 160756](https://github.com/vodkagamed/BookShop/assets/89106400/446cf028-dead-4dcb-85cb-deed30ec8ceb)
+![Screenshot 2024-06-05 161318](https://github.com/vodkagamed/BookShop/assets/89106400/078739a7-18b2-4640-bc52-e0b27ac3a1da)
+![Screenshot 2024-06-05 161457](https://github.com/vodkagamed/BookShop/assets/89106400/447bc015-8a69-4e92-8685-105818754b32)
+![Screenshot 2024-06-05 161330](https://github.com/vodkagamed/BookShop/assets/89106400/f399f674-4f54-44b6-af64-61ce8dbe2656)
